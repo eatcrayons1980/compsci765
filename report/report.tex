@@ -55,7 +55,7 @@
 
 %%% The "real" document content comes below...
 
-\title{765}
+\title{Travel Buddy - A Project Proposal}
 \author{Paul Freeman, Inga Jatzkowski and Diana Hooper}
 %\date{} % Activate to display a given date or no date (if empty),
          % otherwise the current date is printed 
@@ -73,7 +73,7 @@ experiences of the user, and by talking about the travel
 experiences of others. While the primary goal of the agent is
 to be engaging to each user, it attempts to achieve the primary
 goal by informing the users of experiences they might enjoy,
-based on the agent’s beliefs about the users.
+based on the agent’s beliefs about the users. The purpose is only to provide inspiration for destinations, much like one would often do when conversing about travel. By contrast a travel reccommender system would simply just serve up a reccommendation and that would be it. Our conversation would only halt when the user no longer desires to converse with the agent, again much like how real conversations would end.
 
 \section{Motivation}
 Many existing interactive agents are essentially elaborate user
@@ -82,15 +82,16 @@ processes. Additionally, the notion of a basic companion agent has been
 extensively researched. Our motivation is to provide a hybrid agent
 which provides enjoyable interaction for users while also providing
 indirect access to a knowledge base of data on a specific topic.
-This also allows for a scalable system, which could easily be extended
-with more topic components, adding depth to dialogues with users.
+Because we are not building a travel agent or a complete travel reccommender,
+it allows us for more freedom as to what we would like to focus on with our agent. By initially 
+creating an agent which can retain simple facts about the user and then relate them to trips 
+they might find interesting, coupled with prying information out of the user through simple dialogue, we feel we could have something
+that could be a nice proof of concept. Further work could be to add more nuance to the conversation, such as talking about what the user could bring to certain locations or maybe making suggestions based on their possessions.
 
-Rather than viewing the solution as a specific piece of information,
-our process harnesses the combined knowledge of other users into one
-agent. This agent is able to use its a complex user model and extensive
+There will not a be a solution in the form of simply reccommending the perfect trip to the user. Our goal is rather to make a simple emulation of how a conversation about travel would unfold. This agent is able to use its a complex user model and extensive
 knowledge base to engage a user in discovering their own solution.
 We feel that this approach increases the willingness to interact
-with the agent, thus giving more opportunities to solve a problem.
+with the agent, thus giving more opportunities to solve the problem of getting inspiration for new holiday destinations.
 
 \section{Related Work}
 A joint project between researchers in the U.K. and Finland
@@ -178,6 +179,8 @@ PyKE provides us with three kinds of knowledge bases,
 the Knowledge Fact Base, the Knowledge Rule Base and
 the Knowledge Question Base.
 
+\subsection{Components}
+
 The Knowledge Fact Base will contain all the facts we
 know about the user, such as; name, previous trips, travel
 possessions, the trips themselves (with associated
@@ -207,6 +210,21 @@ map the user input to a number of discourse acts in
 order to extract the relevant information and update
 the belief system.
 
+\subsection{Operations}
+
+In order to build a working system, we will need different operations in order to deal with both interpreting the user input, retaining the informations gained from the interpretation and the mapping and then providing some kind of response. For our system we imagine there would be two different kinds of responses, questions and suggesting. Questions have the purpose of directly asking the user in order to clarify things for the user model. Suggestions can be served up as direct suggestions or be formulated as fabricated previous experiences for the agent to which the user can respond positively or negatively, thereby also providing insight to the user's preferences.
+We want to present these responses mostly at random in order to avoid making the conversation follow a set pattern.
+\\
+\\
+Our simple interpretation system would work by receiving some user input. Since we are not implementing an extensive natural language processing system, the next step would be to extract known keywords from the input, such as destination names and simple adjectives. Next, we will attempt to extract coherent facts from the keywords and save them to our knowledge base. So if the user inputs "I went to Tahiti. I love Tahiti!"  we save the fact that the user went to Tahiti in our knowledge base and another fact about how they see that destination in a very positive light. If there is some difficulty extracting facts from the keywords, perhaps because of conflicts, we might try to clarify by asking the user directly by presenting what the agent deems the most appropriate interpretation and getting their response. If the user des not accept the interpretation, the agent could try presenting another interpretation or just give a confused response.
+\\
+The user might also add general information about destinations or their personalities using these adjectives. By saying "I'm very adventurous.", the agent would update its facts by now adding the fact that they are adventurous. Or they could describe a destination as being relaxing or educating, which would in turn add more detail to the descriptions we have of certain trips.
+\\
+\\
+All of these gathered facts are then sometimes used for making suggestions or asking questions. We could for example use the fact that they went to Tahiti and liked it there to look up destinations which share the same characteristics. For this we have a collection of facts about the different destinations. So Tahiti might have a fact categorizing it as being a tropical destination. Doing simple matching, we might just end up pulling another destination which has this fact and suggesting it. During the matching process we will also try to filter out destinations which have characteristics which are seen negatively by the user. We can either completely rule them out or perhaps base our suggestions around a scoring system based on the features, such that some destinations are allowed despite their shortcomings.
+\\
+\\
+Generally the knowledge base is updated updated whenever the agent has an interpretation it is sure of which adds more information. Knowledge is retrieved when making suggestions or asking the user about their experiences or preferences.
 \section{References}
 %References and such
 (1) Marc Cavazza, Cameron Smith, Daniel Charlton, Li Zhang, Markku Turunen, and Jaakko Hakulinen. 2008. A 'companion' ECA with planning and activity modelling. In Proceedings of the 7th international joint conference on Autonomous agents and multiagent systems - Volume 3(AAMAS '08), Vol. 3. International Foundation for Autonomous Agents and Multiagent Systems, Richland, SC, 1281-1284.\\
