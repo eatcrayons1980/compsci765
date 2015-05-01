@@ -1,0 +1,18 @@
+# This is our rule database and should
+# contain forward-chaining and backward-chaining
+# inference rules.
+
+associative_property_of_similarity
+    foreach
+        travelfacts.similar_to($loc1, $loc2)
+    assert
+        travelfacts.similar_to($loc2, $loc1)
+
+transitive_property_of_similarity
+    foreach
+        travelfacts.similar_to($loc1, $loc2)
+        travelfacts.similar_to($loc2, $loc3)
+        check $loc1 != $loc3
+    assert
+        travelfacts.similar_to($loc1, $loc3)
+        travelfacts.similar_to($loc3, $loc1)

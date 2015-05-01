@@ -1,0 +1,17 @@
+# This is our fact database and should contain
+# all the long-term knowledge of the system.
+
+# http://www.adventurouskate.com/a-perfect-day-in-playa-el-tunco-el-salvador/
+travelled_to('kate', 'el tunco')
+travelled_to('kate', 'sihanoukville')
+
+located_in('el tunco', 'el salvador')
+located_in('sihanoukville', 'cambodia')
+
+similar_to('el tunco', 'sihanoukville')
+
+activity_in('el tunco', 'surf')
+activity_in('el tunco', 'relax')
+activity_in('el tunco', 'chill out')
+
+needed_to('surfboard', 'surf')
