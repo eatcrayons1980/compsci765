@@ -1,17 +1,51 @@
 # This is our fact database and should contain
 # all the long-term knowledge of the system.
 
+
+
 # http://www.adventurouskate.com/a-perfect-day-in-playa-el-tunco-el-salvador/
-travelled_to('kate', 'el tunco')
+travelled_to('kate', 'playa el tunco')
 travelled_to('kate', 'sihanoukville')
 
-located_in('el tunco', 'el salvador')
-located_in('sihanoukville', 'cambodia')
+is_in('playa el tunco', 'el salvador')
+is_in('sihanoukville', 'cambodia')
 
-similar_to('el tunco', 'sihanoukville')
+similar_to('playa el tunco', 'sihanoukville')
 
-activity_in('el tunco', 'surf')
-activity_in('el tunco', 'relax')
-activity_in('el tunco', 'chill out')
+has_activity('playa el tunco', 'surfing')
+has_activity('playa el tunco', 'relaxing')
 
-needed_to('surfboard', 'surf')
+requires('surfing', 'surfboard')
+
+
+
+# http://www.adventurouskate.com/rocking-out-on-little-corn-island/
+travelled_to('kate', 'little corn island')
+travelled_to('kate', 'chiang mai')
+travelled_to('kate', 'bangkok')
+travelled_to('kate', 'zagreb')
+travelled_to('kate', 'dubrovnik')
+travelled_to('rob', 'chiang mai')
+travelled_to('rob', 'bangkok')
+travelled_to('rob', 'zagreb')
+travelled_to('rob', 'dubrovnik')
+
+friends('kate', 'rob')
+
+resides('rob', 'little corn island')
+
+is_in('little corn island', 'nicaragua')
+is_in('yemaya island hideaway', 'little corn island')
+
+described_as('little corn island', 'underdeveloped')
+described_as('little corn island', 'well-priced')
+described_as('little corn island', 'isolated')
+described_as('little corn island', 'rugged')
+
+spoken_language('little corn island', 'english')
+spoken_language('little corn island', 'spanish')
+spoken_language('little corn island', 'miskito')
+
+has_activity('little corn island', 'walking')
+
+has_feature('little corn island', 'beach')

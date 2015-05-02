@@ -2,6 +2,12 @@
 # contain forward-chaining and backward-chaining
 # inference rules.
 
+associative_property_of_friendship
+    foreach
+        travelfacts.friends($person1, $person2)
+    assert
+        travelfacts.friends($person2, $person1)
+
 associative_property_of_similarity
     foreach
         travelfacts.similar_to($loc1, $loc2)

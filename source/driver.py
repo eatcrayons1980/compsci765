@@ -12,7 +12,5 @@ def test():
 
     engine.print_stats()
 
-    with engine.prove_goal(
-            'travelrules.similar_to($loc1, $loc2)') as gen:
-        for vars, plan in gen:
-            print(loc1 + ' is similar to ' + loc2)
+    engine.get_kb('travelfacts').dump_universal_facts()
+    engine.get_kb('travelfacts').dump_specific_facts()
