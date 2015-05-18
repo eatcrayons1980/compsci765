@@ -26,11 +26,33 @@ transitive_property_of_similarity
 get_user_name
     foreach
         travelquestions.user_name($n)
-        $date = datetime.date.today()
+        $date = str(datetime.date.today())
         $name = ($n).encode('ascii', 'ignore')
     assert
         shortterm.current_user($name)
         travelfacts.logged_in($name, $date)
 
 fc_extras
+    import datetime
+
+
+existing_user
+    use existing_user($name)
+    when
+        shortterm.current_user($name)
+        $today = str(datetime.date.today())
+        travelfacts.logged_in($name, $date)
+        check $date != $today
+
+new_user
+    use new_user($name)
+    when
+        shortterm.current_user($name)
+        $today = str(datetime.date.today())
+        forall
+            travelfacts.logged_in($name, $date)
+        require
+            check $date == $today
+
+bc_extras
     import datetime
