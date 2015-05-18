@@ -1,6 +1,7 @@
 # This is our fact database and should contain
 # all the long-term knowledge of the system.
 
+logged_in('paul', '2015-04-30')
 
 
 # http://www.adventurouskate.com/a-perfect-day-in-playa-el-tunco-el-salvador/
