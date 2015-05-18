@@ -1,0 +1,4 @@
+user_name($name)
+    Please type your name to activate the system:
+    ---
+    $name = string(2-40)
