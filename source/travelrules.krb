@@ -22,3 +22,15 @@ transitive_property_of_similarity
     assert
         travelfacts.similar_to($loc1, $loc3)
         travelfacts.similar_to($loc3, $loc1)
+
+get_user_name
+    foreach
+        travelquestions.user_name($n)
+        $date = datetime.date.today()
+        $name = ($n).encode('ascii', 'ignore')
+    assert
+        shortterm.current_user($name)
+        travelfacts.logged_in($name, $date)
+
+fc_extras
+    import datetime
