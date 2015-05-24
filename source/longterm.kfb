@@ -95,3 +95,203 @@ has_activity('yosemite', 'hiking')
 has_activity('yosemite', 'rock climbing')
 has_activity('las vegas', 'gambling')
 has_activuty('las vegas', 'shopping')
+
+
+# Added 2015-05-24 16:54:00.967000
+friends('rob', 'kate')
+has_activity('utah', 'skiing')
+has_activity('united states of america', 'skiing')
+has_activity('north america', 'skiing')
+has_activity('earth', 'skiing')
+has_activity('solar system', 'skiing')
+is_in('earth', 'solar system')
+is_in('utah', 'united states of america')
+is_in('united states of america', 'north america')
+is_in('north america', 'earth')
+logged_in('paul', '2015-05-24')
+similar_to('sihanoukville', 'playa el tunco')
+travelled_to('paul', 'utah')
+
+
+# Added 2015-05-24 17:06:09.616000
+has_activity('colorado', 'skiiing')
+has_activity('united states', 'skiiing')
+has_activity('north america', 'skiiing')
+is_in('united states', 'north america')
+is_in('colorado', 'united states')
+logged_in('mark', '2015-05-24')
+travelled_to('mark', 'colorado')
+
+
+# Added 2015-05-24 17:42:08.641000
+has_activity('denver', 'skiing')
+has_activity('colorado', 'skiing')
+has_activity('united states', 'skiing')
+is_in('denver', 'colorado')
+logged_in('bob', '2015-05-24')
+travelled_to('bob', 'denver')
+
+
+# Added 2015-05-24 17:43:31.608000
+has_activity('canada', 'biking')
+has_activity('canada', 'sightseeing')
+has_activity('north america', 'sightseeing')
+has_activity('north america', 'biking')
+is_in('canada', 'north america')
+logged_in('lynn', '2015-05-24')
+travelled_to('lynn', 'canada')
+
+
+# Added 2015-05-24 18:24:50.564000
+has_activity('australia', 'skiing')
+is_in('australia', 'earth')
+travelled_to('paul', 'australia')
+
+
+# Added 2015-05-24 18:26:02.564000
+has_activity('south africa', 'sightseeing')
+has_activity('africa', 'sightseeing')
+has_activity('earth', 'sightseeing')
+is_in('africa', 'earth')
+is_in('south africa', 'africa')
+logged_in('julia', '2015-05-24')
+travelled_to('julia', 'south africa')
+
+
+# Added 2015-05-24 18:40:48.013000
+has_activity('fiji', 'diving')
+has_activity('pacific ocean', 'diving')
+has_activity('earth', 'diving')
+is_in('pacific ocean', 'earth')
+is_in('fiji', 'pacific ocean')
+logged_in('billy', '2015-05-24')
+travelled_to('billy', 'fiji')
+
+
+# Added 2015-05-24 18:44:05.061000
+
+
+# Added 2015-05-24 18:45:55.687000
+has_activity('mt hood', 'skiing')
+has_activity('oregon', 'skiing')
+is_in('oregon', 'united states')
+is_in('mt hood', 'oregon')
+logged_in('jason', '2015-05-24')
+travelled_to('jason', 'mt hood')
+
+
+# Added 2015-05-24 18:47:36.630000
+has_activity('russia', 'sightseeing')
+has_activity('moscow', 'sightseeing')
+is_in('moscow', 'russia')
+logged_in('tim', '2015-05-24')
+travelled_to('tim', 'russia')
+
+
+# Added 2015-05-24 18:48:24.048000
+logged_in('john', '2015-05-24')
+travelled_to('john', 'australia')
+
+
+# Added 2015-05-24 18:49:08.061000
+has_activity('canada', 'camping')
+has_activity('north america', 'camping')
+logged_in('valerie', '2015-05-24')
+travelled_to('valerie', 'canada')
+
+
+# Added 2015-05-24 18:53:20.794000
+has_activity('mexico', 'eating')
+has_activity('north america', 'eating')
+is_in('mexico', 'north america')
+logged_in('rachael', '2015-05-24')
+travelled_to('rachael', 'mexico')
+
+
+# Added 2015-05-24 19:23:49.164000
+has_activity('walla walla', 'wine tasting')
+has_activity('washington', 'wine tasting')
+has_activity('united states', 'wine tasting')
+is_in('washington', 'united states')
+is_in('walla walla', 'washington')
+is_in('yemaya island hideaway', 'nicaragua')
+is_in('the everglades', 'usa')
+is_in('yosemite', 'usa')
+is_in('san francisco', 'usa')
+is_in('las vegas', 'usa')
+is_in('utah', 'north america')
+is_in('utah', 'earth')
+is_in('utah', 'solar system')
+is_in('united states of america', 'earth')
+is_in('united states of america', 'solar system')
+is_in('north america', 'solar system')
+is_in('united states', 'solar system')
+is_in('colorado', 'solar system')
+is_in('denver', 'solar system')
+is_in('oregon', 'solar system')
+is_in('mt hood', 'solar system')
+is_in('washington', 'solar system')
+is_in('walla walla', 'solar system')
+is_in('canada', 'solar system')
+is_in('mexico', 'solar system')
+is_in('united states', 'earth')
+is_in('colorado', 'earth')
+is_in('denver', 'earth')
+is_in('oregon', 'earth')
+is_in('mt hood', 'earth')
+is_in('washington', 'earth')
+is_in('walla walla', 'earth')
+is_in('colorado', 'north america')
+is_in('denver', 'north america')
+is_in('denver', 'united states')
+is_in('canada', 'earth')
+is_in('australia', 'solar system')
+is_in('africa', 'solar system')
+is_in('south africa', 'solar system')
+is_in('south africa', 'earth')
+is_in('pacific ocean', 'solar system')
+is_in('fiji', 'solar system')
+is_in('fiji', 'earth')
+is_in('oregon', 'north america')
+is_in('mt hood', 'north america')
+is_in('mt hood', 'united states')
+is_in('mexico', 'earth')
+is_in('washington', 'north america')
+is_in('walla walla', 'north america')
+is_in('walla walla', 'united states')
+logged_in('fred', '2015-05-24')
+travelled_to('fred', 'walla walla')
+
+
+# Added 2015-05-24 19:31:19.501000
+has_activity('toronto', 'sporting')
+has_activity('canada', 'sporting')
+is_in('toronto', 'canada')
+is_in('toronto', 'north america')
+is_in('toronto', 'earth')
+is_in('toronto', 'solar system')
+travelled_to('mark', 'toronto')
+
+
+# Added 2015-05-24 20:24:14.119000
+has_activity('texas', 'horseback riding')
+has_activity('texas', 'sightseeing')
+has_activity('united states', 'sightseeing')
+has_activity('united states', 'horseback riding')
+is_in('texas', 'united states')
+is_in('texas', 'north america')
+is_in('texas', 'earth')
+is_in('texas', 'solar system')
+logged_in('ben', '2015-05-24')
+travelled_to('ben', 'texas')
+
+
+# Added 2015-05-24 20:25:45.426000
+has_activity('tiajuana', 'donkey riding')
+has_activity('mexico', 'donkey riding')
+is_in('tiajuana', 'mexico')
+is_in('tiajuana', 'north america')
+is_in('tiajuana', 'earth')
+is_in('tiajuana', 'solar system')
+logged_in('tommy', '2015-05-24')
+travelled_to('tommy', 'tiajuana')
