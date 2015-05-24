@@ -23,14 +23,61 @@ transitive_property_of_similarity
         travelfacts.similar_to($loc1, $loc3)
         travelfacts.similar_to($loc3, $loc1)
 
-get_user_name
+user_login
     foreach
         travelquestions.user_name($n)
         $date = str(datetime.date.today())
         $name = ($n).encode('ascii', 'ignore')
     assert
-        shortterm.current_user($name)
+        shortterm.current_user($name, ())
         travelfacts.logged_in($name, $date)
+
+user_new_trip
+    foreach
+        shortterm.current_user($name, ())
+        travelquestions.new_trip(True)
+        travelquestions.new_trip_location($p)
+        $place = ($p).encode('ascii', 'ignore')
+    assert
+        shortterm.last_trip($place, ())
+        travelfacts.travelled_to($name, $place)
+
+others_travelled_to_location
+    foreach
+        travelfacts.travelled_to($user, $place)
+        shortterm.last_trip($place, ())
+        shortterm.current_user($current, ())
+        check $user != $current
+    assert
+        shortterm.also_been_there($user, $place)
+        python print($user + " has also travelled to " + $place + "!")
+
+ask_about_activity
+    foreach
+        shortterm.last_trip($place, ())
+        notany
+            shortterm.has_activity($place, $_, 1)
+        travelquestions.trip_activity_1($a)
+        $activity = ($a).encode('ascii', 'ignore')
+        check $activity != 'nothing'
+    assert
+        shortterm.has_activity($place, $activity, 1)
+        travelfacts.has_activity($place, $activity)
+
+ask_about_another_activity
+    foreach
+        shortterm.has_activity($place, $_, $value1)
+        forall
+            shortterm.has_activity($place, $_, $value2)
+        require
+            check $value1 >= $value2
+        $value = $value1 + 1
+        travelquestions.trip_activity_2($a, $value)
+        $activity = ($a).encode('ascii', 'ignore')
+        check $activity != 'nothing'
+    assert
+        shortterm.has_activity($place, $activity, $value)
+        travelfacts.has_activity($place, $activity)
 
 fc_extras
     import datetime
@@ -39,7 +86,7 @@ fc_extras
 existing_user
     use existing_user($name)
     when
-        shortterm.current_user($name)
+        shortterm.current_user($name, ())
         $today = str(datetime.date.today())
         travelfacts.logged_in($name, $date)
         check $date != $today
@@ -47,7 +94,7 @@ existing_user
 new_user
     use new_user($name)
     when
-        shortterm.current_user($name)
+        shortterm.current_user($name, ())
         $today = str(datetime.date.today())
         forall
             travelfacts.logged_in($name, $date)

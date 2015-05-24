@@ -2,3 +2,24 @@ user_name($name)
     Please type your name to activate the system:
     ---
     $name = string(2-40)
+
+new_trip($ans)
+    Have you been on any new trips recently?
+    ---
+    $ans = yn
+        True ! Oh, wow! I'd love to hear about it.
+
+new_trip_location($place)
+    Where did you go?
+    ---
+    $place = string(2-40)
+
+trip_activity_1($activity)
+    What did you do there?
+    ---
+    $activity = string(2-40)
+
+trip_activity_2($activity, $value)
+    Did you do anything else?
+    ---
+    $activity = string(2-40)
