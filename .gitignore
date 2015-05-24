@@ -1,5 +1,6 @@
 report/report.log
 report/report.synctex.gz
+source/shortterm.kfb
 *.swp
 pyke-1.1.1/build
 *~
