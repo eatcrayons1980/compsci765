@@ -23,3 +23,20 @@ trip_activity_2($activity, $value)
     Did you do anything else?
     ---
     $activity = string(2-40)
+
+location_hierarchy($place1, $place2)
+    I've never heard of $place2. Where is it located?
+    ---
+    $place1 = string(2-40)
+
+location_hierarchy_a($place1, $place2)
+    Where did you go in $place2?
+    ---
+    $place1 = string(2-40)
+
+confirm_recommendation($place, $ans)
+    I think you would have a really good time in $place.
+    Do you think I'm right?
+    ---
+    $ans = yn
+        True ! I thought so. Be sure to tell me about it when you get back!

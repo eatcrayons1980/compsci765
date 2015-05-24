@@ -2,6 +2,8 @@
 # contain forward-chaining and backward-chaining
 # inference rules.
 
+# FORWARD CHAINING RULES
+
 associative_property_of_friendship
     foreach
         longterm.friends($person1, $person2)
@@ -74,32 +76,86 @@ ask_about_another_activity
         $value = $value1 + 1
         travelquestions.trip_activity_2($a, $value)
         $activity = ($a).encode('ascii', 'ignore')
-        check $activity != 'nothing'
+        check $activity != 'no'
     assert
         shortterm.has_activity($place, $activity, $value)
         longterm.has_activity($place, $activity)
+
+location_hierarchy
+    foreach
+        shortterm.last_trip($place, ())
+        notany
+            longterm.is_in($place, $_)
+        notany
+            longterm.is_in($_, $place)
+        travelquestions.location_hierarchy($l, $place)
+        $location = ($l).encode('ascii', 'ignore')
+        check $location != 'idk'
+    assert
+        shortterm.last_trip($location, ())
+        longterm.is_in($place, $location)
+
+location_hierarchy_a
+    foreach
+        shortterm.last_trip($place, ())
+        notany
+            longterm.is_in($place, $_)
+        travelquestions.location_hierarchy_a($l, $place)
+        $location = ($l).encode('ascii', 'ignore')
+        check $location != 'idk'
+    assert
+        shortterm.last_trip($location, ())
+        longterm.is_in($location, $place)
+
+infer_hierarchy
+    foreach
+        longterm.is_in($a, $b)
+        longterm.is_in($b, $c)
+        check $a != $b
+        check $a != $c
+        check $b != $c
+    assert
+        longterm.is_in($a, $c)
 
 fc_extras
     import datetime
 
 
-existing_user
-    use existing_user($name)
-    when
-        shortterm.current_user($name, ())
-        $today = str(datetime.date.today())
-        longterm.logged_in($name, $date)
-        check $date != $today
 
-new_user
-    use new_user($name)
-    when
-        shortterm.current_user($name, ())
-        $today = str(datetime.date.today())
-        forall
-            longterm.logged_in($name, $date)
-        require
-            check $date == $today
+# BACKWARD CHAINING RULES
 
-bc_extras
-    import datetime
+recommender_same_activities
+    use recommender_same_activities($place1, $random)
+    when
+        check $random < 20
+        shortterm.current_user($user, ())
+        longterm.travelled_to($user, $place2)
+        longterm.has_activity($place1, $activity)
+        longterm.has_activity($place2, $activity)
+        check $place1 != $place2
+        notany
+            longterm.is_in($place1, $place2)
+        notany
+            longterm.is_in($place2, $place1)
+        notany
+            travelrules.specific_location($activity, $place1, $_)
+        travelquestions.confirm_recommendation($place1, True)
+
+recommender_likes_activities
+    use recommender_likes_activities($place1, $random)
+    when
+        check $random < 20
+        shortterm.current_user($user, ())
+        longterm.likes_activity($user, $activity)
+        longterm.has_activity($place, $activity)
+        notany
+            travelrules.specific_location($activity, $place, $_)
+        travelquestions.confirm_recommendation($place, True)
+
+specific_location
+    use specific_location($activity, $place, $subplace)
+    when
+        longterm.is_in($subplace, $place)
+        longterm.has_activity($place, $activity)
+        longterm.has_activity($subplace, $activity)
+

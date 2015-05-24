@@ -4,31 +4,51 @@ from pyke import knowledge_engine
 from pyke import krb_traceback
 import sys
 import datetime
+import random
 
 def run():
-    init_shortterm_memory()
-    init_user()
+    random.seed()
+    wipe_shortterm_memory()
+    e = launch_engine()
+    frustration = 0
+    while frustration < 100:
+        
+        # suggest place with same activities as other places the user has been
+        x = random.randint(0,100)
+        try:
+            res,plan = e.prove_1_goal(
+                    'travelrules.recommender_same_activities($place,' + str(x) + ')'
+                    )
+        except knowledge_engine.CanNotProve:
+            pass
+        else:
+            break
 
-def init_shortterm_memory():
+        # suggest place with activities the user likes
+        x = random.randint(0,100)
+        try:
+            res,plan = e.prove_1_goal(
+                    'travelrules.recommender_likes_activities($place,' + str(x) + ')'
+                    )
+        except knowledge_engine.CanNotProve:
+            pass
+        else:
+            break
+
+        frustration = frustration + 5
+
+    write_longterm(e)
+
+def wipe_shortterm_memory():
     shortterm = open('shortterm.kfb', 'w')
-    shortterm.write("# Activated " + str(datetime.datetime.now()) + "\n")
+    shortterm.write("# Shortterm memory wiped: " + str(datetime.datetime.now()) + "\n")
     shortterm.close()
 
-def init_user():
+def launch_engine():
     engine = knowledge_engine.engine(__file__)
     engine.reset()
     engine.activate('travelrules')
-
-    try:
-        result, plan = engine.prove_1_goal('travelrules.new_user($user)')
-    except knowledge_engine.CanNotProve:
-        try:
-            result, plan = engine.prove_1_goal('travelrules.existing_user($user)')
-        except knowledge_engine.CanNotProve:
-            print("Could not establish user model. Exiting with -1.")
-            sys.exit(-1)
-
-    write_shortterm_longterm(engine)
+    return engine
 
 def write_shortterm(engine):
     shortterm = open('shortterm.kfb', 'a')
