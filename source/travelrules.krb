@@ -4,24 +4,24 @@
 
 associative_property_of_friendship
     foreach
-        travelfacts.friends($person1, $person2)
+        longterm.friends($person1, $person2)
     assert
-        travelfacts.friends($person2, $person1)
+        longterm.friends($person2, $person1)
 
 associative_property_of_similarity
     foreach
-        travelfacts.similar_to($loc1, $loc2)
+        longterm.similar_to($loc1, $loc2)
     assert
-        travelfacts.similar_to($loc2, $loc1)
+        longterm.similar_to($loc2, $loc1)
 
 transitive_property_of_similarity
     foreach
-        travelfacts.similar_to($loc1, $loc2)
-        travelfacts.similar_to($loc2, $loc3)
+        longterm.similar_to($loc1, $loc2)
+        longterm.similar_to($loc2, $loc3)
         check $loc1 != $loc3
     assert
-        travelfacts.similar_to($loc1, $loc3)
-        travelfacts.similar_to($loc3, $loc1)
+        longterm.similar_to($loc1, $loc3)
+        longterm.similar_to($loc3, $loc1)
 
 user_login
     foreach
@@ -30,7 +30,7 @@ user_login
         $name = ($n).encode('ascii', 'ignore')
     assert
         shortterm.current_user($name, ())
-        travelfacts.logged_in($name, $date)
+        longterm.logged_in($name, $date)
 
 user_new_trip
     foreach
@@ -40,11 +40,11 @@ user_new_trip
         $place = ($p).encode('ascii', 'ignore')
     assert
         shortterm.last_trip($place, ())
-        travelfacts.travelled_to($name, $place)
+        longterm.travelled_to($name, $place)
 
 others_travelled_to_location
     foreach
-        travelfacts.travelled_to($user, $place)
+        longterm.travelled_to($user, $place)
         shortterm.last_trip($place, ())
         shortterm.current_user($current, ())
         check $user != $current
@@ -62,7 +62,7 @@ ask_about_activity
         check $activity != 'nothing'
     assert
         shortterm.has_activity($place, $activity, 1)
-        travelfacts.has_activity($place, $activity)
+        longterm.has_activity($place, $activity)
 
 ask_about_another_activity
     foreach
@@ -77,7 +77,7 @@ ask_about_another_activity
         check $activity != 'nothing'
     assert
         shortterm.has_activity($place, $activity, $value)
-        travelfacts.has_activity($place, $activity)
+        longterm.has_activity($place, $activity)
 
 fc_extras
     import datetime
@@ -88,7 +88,7 @@ existing_user
     when
         shortterm.current_user($name, ())
         $today = str(datetime.date.today())
-        travelfacts.logged_in($name, $date)
+        longterm.logged_in($name, $date)
         check $date != $today
 
 new_user
@@ -97,7 +97,7 @@ new_user
         shortterm.current_user($name, ())
         $today = str(datetime.date.today())
         forall
-            travelfacts.logged_in($name, $date)
+            longterm.logged_in($name, $date)
         require
             check $date == $today
 

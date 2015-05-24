@@ -34,17 +34,17 @@ def write_shortterm(engine):
     shortterm = open('shortterm.kfb', 'a')
     temp = sys.stdout
     sys.stdout = shortterm
-    engine.get_kb('shortterm').dump_universal_facts()
+    print("\n\n# Added " + str(datetime.datetime.now()))
     engine.get_kb('shortterm').dump_specific_facts()
     sys.stdout = temp
     shortterm.close()
 
 def write_longterm(engine):
-    longterm = open('travelfacts.kfb', 'a')
+    longterm = open('longterm.kfb', 'a')
     temp = sys.stdout
     sys.stdout = longterm
     print("\n\n# Added " + str(datetime.datetime.now()))
-    engine.get_kb('travelfacts').dump_specific_facts()
+    engine.get_kb('longterm').dump_specific_facts()
     sys.stdout = temp
     longterm.close()
 
