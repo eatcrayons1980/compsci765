@@ -10,11 +10,18 @@ def run():
     random.seed()
     wipe_shortterm_memory()
     e = launch_engine()
+    e.assert_('shortterm', 'init_complete', ((), ()))
+    e.assert_('shortterm', 'frustration', (0, ()))
     frustration = 0
     while frustration < 100:
-        
+
+        # refresh data
+        write_shortterm_longterm(e)
+        e = launch_engine()
+
         # suggest place with same activities as other places the user has been
         x = random.randint(0,100)
+        print("Random int is " + str(x))
         try:
             res,plan = e.prove_1_goal(
                     'travelrules.recommender_same_activities($place,' + str(x) + ')'
@@ -36,6 +43,7 @@ def run():
             break
 
         frustration = frustration + 5
+        e.assert_('shortterm', 'frustration', (frustration, ()))
 
     write_longterm(e)
 

@@ -4,18 +4,25 @@
 
 # FORWARD CHAINING RULES
 
+# If A is friends with B,
+# then B is friends with A.
 associative_property_of_friendship
     foreach
         longterm.friends($person1, $person2)
     assert
         longterm.friends($person2, $person1)
 
+# If A is similar to B,
+# then B is similar to A.
 associative_property_of_similarity
     foreach
         longterm.similar_to($loc1, $loc2)
     assert
         longterm.similar_to($loc2, $loc1)
 
+# If A is similar to B
+# and B is similar to C,
+# then A is similar to C.
 transitive_property_of_similarity
     foreach
         longterm.similar_to($loc1, $loc2)
@@ -25,8 +32,12 @@ transitive_property_of_similarity
         longterm.similar_to($loc1, $loc3)
         longterm.similar_to($loc3, $loc1)
 
+# If there is no current user,
+# ask for the user name.
 user_login
     foreach
+        notany
+            shortterm.current_user($_,())
         travelquestions.user_name($n)
         $date = str(datetime.date.today())
         $name = ($n).encode('ascii', 'ignore')
@@ -34,8 +45,12 @@ user_login
         shortterm.current_user($name, ())
         longterm.logged_in($name, $date)
 
+# If we have not initialized the user yet,
+# ask if they've been on a recent trip.
 user_new_trip
     foreach
+        notany
+            shortterm.init_complete((),())
         shortterm.current_user($name, ())
         travelquestions.new_trip(True)
         travelquestions.new_trip_location($p)
@@ -44,18 +59,28 @@ user_new_trip
         shortterm.last_trip($place, ())
         longterm.travelled_to($name, $place)
 
-others_travelled_to_location
-    foreach
-        longterm.travelled_to($user, $place)
-        shortterm.last_trip($place, ())
-        shortterm.current_user($current, ())
-        check $user != $current
-    assert
-        shortterm.also_been_there($user, $place)
-        python print($user + " has also travelled to " + $place + "!")
 
+
+#others_travelled_to_location
+#    foreach
+#        notany
+#            shortterm.init_complete((),())
+#        longterm.travelled_to($user, $place)
+#        shortterm.last_trip($place, ())
+#        shortterm.current_user($current, ())
+#        check $user != $current
+#    assert
+#        shortterm.also_been_there($user, $place)
+
+
+# If the user told us about a recent trip
+# and we don't know any activities for it
+# and the answer to the activity question isn't 'nothing'.
+# then store their answer as an activity for that location.
 ask_about_activity
     foreach
+        notany
+            shortterm.no_more_activities($place, ())
         shortterm.last_trip($place, ())
         notany
             shortterm.has_activity($place, $_, 1)
@@ -66,8 +91,30 @@ ask_about_activity
         shortterm.has_activity($place, $activity, 1)
         longterm.has_activity($place, $activity)
 
+# If the user told us about a recent trip
+# and we don't know any activities for it
+# and the answer to the activity question is 'nothing'.
+# then store that we are done with activities at this location.
+ask_about_activity_nothing
+    foreach
+        notany
+            shortterm.no_more_activities($place, ())
+        shortterm.last_trip($place, ())
+        notany
+            shortterm.has_activity($place, $_, 1)
+        travelquestions.trip_activity_1($a)
+        $activity = ($a).encode('ascii', 'ignore')
+        check $activity == 'nothing'
+    assert
+        shortterm.no_more_activities($place, ())
+
+# If the users has told us about activities on their last trip
+# but the answer to the another activity question isn't 'no',
+# then store their answer as another activity for that location.
 ask_about_another_activity
     foreach
+        notany
+            shortterm.no_more_activities($place, ())
         shortterm.has_activity($place, $_, $value1)
         forall
             shortterm.has_activity($place, $_, $value2)
@@ -81,6 +128,27 @@ ask_about_another_activity
         shortterm.has_activity($place, $activity, $value)
         longterm.has_activity($place, $activity)
 
+# If the users has told us about activities on their last trip
+# but the answer to the another activity question is 'no',
+# then store that we are done with activities at this location.
+ask_about_another_activity_no
+    foreach
+        notany
+            shortterm.no_more_activities($place, ())
+        shortterm.has_activity($place, $_, $value1)
+        forall
+            shortterm.has_activity($place, $_, $value2)
+        require
+            check $value1 >= $value2
+        $value = $value1 + 1
+        travelquestions.trip_activity_2($a, $value)
+        $activity = ($a).encode('ascii', 'ignore')
+        check $activity == 'no'
+    assert
+        shortterm.no_more_activities($place, ())
+
+# If the last trip has no place in the location hierarchy,
+# then ask where the location of the trip is located.
 location_hierarchy
     foreach
         shortterm.last_trip($place, ())
@@ -95,6 +163,8 @@ location_hierarchy
         shortterm.last_trip($location, ())
         longterm.is_in($place, $location)
 
+# If the location of the trip is at the top of the hierarchy,
+# then ask the user where in the location they travelled.
 location_hierarchy_a
     foreach
         shortterm.last_trip($place, ())
@@ -107,6 +177,7 @@ location_hierarchy_a
         shortterm.last_trip($location, ())
         longterm.is_in($location, $place)
 
+# Infer other hierarchy facts.
 infer_hierarchy
     foreach
         longterm.is_in($a, $b)
@@ -116,6 +187,74 @@ infer_hierarchy
         check $b != $c
     assert
         longterm.is_in($a, $c)
+
+# If the current user like an activity
+# then they have an opinion on that activity.
+has_opinion_likes
+    foreach
+        shortterm.current_user($user, ())
+        longterm.likes_activity($user, $activity)
+    assert
+        shortterm.has_opinion_on($user, $activity)
+
+# If the current user dislikes an activity
+# then they have an opinion on that activity.
+has_opinion_dislikes
+    foreach
+        shortterm.current_user($user, ())
+        longterm.dislikes_activity($user, $activity)
+    assert
+        shortterm.has_opinion_on($user, $activity)
+
+# Set frustration to 0.
+init_frustration
+    foreach
+        notany
+            shortterm.frustration($_, ())
+    assert
+        shortterm.frustration(0, ())
+
+acquire_knowledge_likes
+    foreach
+        shortterm.current_user($user, ())
+        shortterm.frustration($f, ())
+        forall
+            shortterm.frustration($f2, ())
+        require
+            check $f >= $f2
+        notany
+            shortterm.acquired_knowledge($f, ())
+        first
+            longterm.has_activity($place, $activity)
+            notany
+                shortterm.has_opinion_on($user, $activity)
+            travelquestions.q_likes_activity($activity, $ans)
+        check $ans == True
+    assert
+        shortterm.acquired_knowledge($f, ())
+        shortterm.has_opinion_on($user, $activity)
+        longterm.likes_activity($user, $activity)
+
+acquire_knowledge_dislikes
+    foreach
+        shortterm.current_user($user, ())
+        shortterm.frustration($f, ())
+        forall
+            shortterm.frustration($f2, ())
+        require
+            check $f >= $f2
+        notany
+            shortterm.acquired_knowledge($f, ())
+        first
+            longterm.has_activity($place, $activity)
+            notany
+                shortterm.has_opinion_on($user, $activity)
+            travelquestions.q_likes_activity($activity, $ans)
+        check $ans == False
+    assert
+        shortterm.acquired_knowledge($f, ())
+        shortterm.has_opinion_on($user, $activity)
+        longterm.dislikes_activity($user, $activity)
 
 fc_extras
     import datetime

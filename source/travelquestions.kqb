@@ -40,3 +40,9 @@ confirm_recommendation($place, $ans)
     ---
     $ans = yn
         True ! I thought so. Be sure to tell me about it when you get back!
+
+q_likes_activity($activity, $ans)
+    I know some places that are good for $activity.
+    Do you like $activity?
+    ---
+    $ans = yn
