@@ -40,6 +40,28 @@ def run():
             pass
         else:
             break
+        
+        # suggest place with activities the user likes
+        x = random.randint(0,100)
+        try:
+            res,plan = e.prove_1_goal(
+                    'travelrules.recommender_same_weather($place,' + str(x) + ')'
+                    )
+        except knowledge_engine.CanNotProve:
+            pass
+        else:
+            break
+        
+        # suggest place with activities the user likes
+        x = random.randint(0,100)
+        try:
+            res,plan = e.prove_1_goal(
+                    'travelrules.recommender_same_weather_activities($place,' + str(x) + ')'
+                    )
+        except knowledge_engine.CanNotProve:
+            pass
+        else:
+            break
 
         frustration = frustration + 5
         e.assert_('shortterm', 'frustration', (frustration, ()))

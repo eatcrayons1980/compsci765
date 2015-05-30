@@ -2,6 +2,11 @@ user_name($name)
     Please type your name to activate the system:
     ---
     $name = string(2-40)
+	
+weather_trip($ans)
+	What was the weather on the trip?
+	---
+	$ans = string(2-40)
 
 new_trip($ans)
     Have you been on any new trips recently?

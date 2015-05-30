@@ -5,4 +5,5 @@ source/shortterm.kfb
 pyke-1.1.1/build
 *~
 *.pyc
+*.bak
 compiled_krb

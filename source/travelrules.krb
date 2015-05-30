@@ -58,10 +58,13 @@ user_new_trip
         shortterm.current_user($name, ())
         travelquestions.new_trip(True)
         travelquestions.new_trip_location($p)
+        travelquestions.weather_trip($w)
         $place = ($p).encode('ascii', 'ignore')
+        $weather = ($w).encode('ascii','ignore')
     assert
         shortterm.last_trip($place, ())
         longterm.travelled_to($name, $place)
+        longterm.weather_cond($place, $weather)
 
 # If the user told us about a recent trip
 # and we don't know any activities for it
@@ -283,7 +286,7 @@ recommender_same_activities
         notany
             longterm.is_in($place2, $place1)
         notany
-            travelrules.specific_location($activity, $place1, $_)
+            travelrules.specific_location_activity($activity, $place1, $_)
         travelquestions.confirm_recommendation($place1, True)
 
 recommender_likes_activities
@@ -294,13 +297,54 @@ recommender_likes_activities
         longterm.likes_activity($user, $activity)
         longterm.has_activity($place, $activity)
         notany
-            travelrules.specific_location($activity, $place, $_)
+            travelrules.specific_location_activity($activity, $place, $_)
         travelquestions.confirm_recommendation($place, True)
 
-specific_location
-    use specific_location($activity, $place, $subplace)
+recommender_same_weather
+    use recommender_same_weather($place1,$random)
+    when
+        check $random < 20
+        shortterm.current_user($user,())
+        longterm.travelled_to($user, $place2)
+        longterm.weather_cond($place1, $weather)
+        longterm.weather_cond($place2, $weather)
+        check $place1 != $place2
+        notany
+            travelrules.specific_location_weather($weather, $place1, $_)
+        travelquestions.confirm_recommendation($place1, True)
+
+recommender_same_weather_activities
+    use recommender_same_weather($place1,$random)
+    when
+        check $random < 20
+        shortterm.current_user($user,())
+        longterm.travelled_to($user, $place2)
+        longterm.weather_cond($place1, $weather)
+        longterm.weather_cond($place2, $weather)
+        longterm.has_activity($place1, $activity)
+        longterm.has_activity($place2, $activity)
+        check $place1 != $place2
+        notany
+            longterm.is_in($place1, $place2)
+        notany
+            longterm.is_in($place2, $place1)
+        notany
+            travelrules.specific_location_activity($activity, $place1, $_)
+        notany
+            travelrules.specific_location_weather($weather, $place1, $_)
+        travelquestions.confirm_recommendation($place1, True)
+
+specific_location_activity
+    use specific_location_activity($activity, $place, $subplace)
     when
         longterm.is_in($subplace, $place)
         longterm.has_activity($place, $activity)
         longterm.has_activity($subplace, $activity)
+
+specific_location_weather
+    use specific_location_weather($weather, $place, $subplace)
+    when
+        longterm.is_in($subplace, $place)
+        longterm.weather_cond($place, $weather)
+        longterm.weather_cond($subplace, $weather)
 

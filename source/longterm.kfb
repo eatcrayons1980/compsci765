@@ -295,3 +295,20 @@ is_in('tiajuana', 'earth')
 is_in('tiajuana', 'solar system')
 logged_in('tommy', '2015-05-24')
 travelled_to('tommy', 'tiajuana')
+
+
+# Added 2015-05-30 18:18:56.364000
+likes_activity('holly', 'surfing')
+logged_in('holly', '2015-05-30')
+
+
+# Added 2015-05-30 18:19:06.906000
+dislikes_activity('holly', 'relaxing')
+
+
+# Added 2015-05-30 18:19:10.208000
+likes_activity('holly', 'walking')
+
+
+# Added 2015-05-30 18:19:12.444000
+likes_activity('holly', 'boat tour')
