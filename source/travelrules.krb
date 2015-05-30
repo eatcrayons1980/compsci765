@@ -32,6 +32,10 @@ transitive_property_of_similarity
         longterm.similar_to($loc1, $loc3)
         longterm.similar_to($loc3, $loc1)
 
+
+
+# USER INITIALIZATION RULES
+
 # If there is no current user,
 # ask for the user name.
 user_login
@@ -59,26 +63,14 @@ user_new_trip
         shortterm.last_trip($place, ())
         longterm.travelled_to($name, $place)
 
-
-
-#others_travelled_to_location
-#    foreach
-#        notany
-#            shortterm.init_complete((),())
-#        longterm.travelled_to($user, $place)
-#        shortterm.last_trip($place, ())
-#        shortterm.current_user($current, ())
-#        check $user != $current
-#    assert
-#        shortterm.also_been_there($user, $place)
-
-
 # If the user told us about a recent trip
 # and we don't know any activities for it
 # and the answer to the activity question isn't 'nothing'.
 # then store their answer as an activity for that location.
 ask_about_activity
     foreach
+        notany
+            shortterm.init_complete((),())
         notany
             shortterm.no_more_activities($place, ())
         shortterm.last_trip($place, ())
@@ -98,6 +90,8 @@ ask_about_activity
 ask_about_activity_nothing
     foreach
         notany
+            shortterm.init_complete((),())
+        notany
             shortterm.no_more_activities($place, ())
         shortterm.last_trip($place, ())
         notany
@@ -113,6 +107,8 @@ ask_about_activity_nothing
 # then store their answer as another activity for that location.
 ask_about_another_activity
     foreach
+        notany
+            shortterm.init_complete((),())
         notany
             shortterm.no_more_activities($place, ())
         shortterm.has_activity($place, $_, $value1)
@@ -134,6 +130,8 @@ ask_about_another_activity
 ask_about_another_activity_no
     foreach
         notany
+            shortterm.init_complete((),())
+        notany
             shortterm.no_more_activities($place, ())
         shortterm.has_activity($place, $_, $value1)
         forall
@@ -151,6 +149,8 @@ ask_about_another_activity_no
 # then ask where the location of the trip is located.
 location_hierarchy
     foreach
+        notany
+            shortterm.init_complete((),())
         shortterm.last_trip($place, ())
         notany
             longterm.is_in($place, $_)
@@ -167,6 +167,8 @@ location_hierarchy
 # then ask the user where in the location they travelled.
 location_hierarchy_a
     foreach
+        notany
+            shortterm.init_complete((),())
         shortterm.last_trip($place, ())
         notany
             longterm.is_in($place, $_)
@@ -176,6 +178,10 @@ location_hierarchy_a
     assert
         shortterm.last_trip($location, ())
         longterm.is_in($location, $place)
+
+
+
+# LOOP RULES (AFTER USER INITIALIZATION)
 
 # Infer other hierarchy facts.
 infer_hierarchy

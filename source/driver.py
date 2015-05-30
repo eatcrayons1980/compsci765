@@ -21,7 +21,6 @@ def run():
 
         # suggest place with same activities as other places the user has been
         x = random.randint(0,100)
-        print("Random int is " + str(x))
         try:
             res,plan = e.prove_1_goal(
                     'travelrules.recommender_same_activities($place,' + str(x) + ')'
