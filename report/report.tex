@@ -55,7 +55,7 @@
 
 %%% The "real" document content comes below...
 
-\title{Travel Buddy - A Project Proposal}
+\title{Travel Buddy - Final Report}
 \author{Paul Freeman, Inga Jatzkowski and Diana Hooper}
 %\date{} % Activate to display a given date or no date (if empty),
          % otherwise the current date is printed 
@@ -154,6 +154,45 @@ that a user dislikes hot weather, this will influence
 beliefs about their enjoyment of locations with warm climates.
 
 \section{Design}
+\subsection{Overall Architecture}
+The Travel Buddy is written in Python and is designed to be
+compatible with version 2.7. Porting the code to
+Python 3 could be done with little effort. The primary
+library at use in the program is PyKE (Python Knowledge
+Engine), for which there are version compatible with both
+Python 2.6+ and Python 3. As this program is a prototype,
+no extra effort has been invested in developing a
+user interface. Instead, all I/O is handled through a simple
+commandline interface relying on stdin and stdout.
+
+The components of the program can be broken into several
+parts, many of which are mandated by the PyKE library.
+
+\subsubsection{Driver}
+The driver (implemented in the file driver.py) handles the
+basic control flow of a user interaction with the system.
+The driver starts the knowledge engine and 
+segments the types of interactions available
+with the knowledge engine and assists in modelling the
+user. Additionally, since PyKE allows forward-chaining to
+occur only once for each engine, the driver handles the
+creation of multiple engines based on the same knowledge
+base in order to facilitate different executions of
+forward-chaining rules.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm]{driver_control_flow.png}
+\caption{Implemented control flow of the main driver.\label{fig:driver}}
+\end{figure}
+
+As Figure \ref{fig:driver} shows, the driver begins by erasing the short term memory file and setting the user frustration level to zero. Following these initialization steps, the knowledge engine is activated for the first time. Within the knowledge engine, a number of forward chaining rules run to initialize the session and acquire knowledge about the user. After the completion of the forward chaining rules, the user frustration level is compared to the threshold and the program exits if it is determined the we have been unable to suggest a trip in a reasonable time.
+
+Assuming frustration is within guidelines, the driver attempts to prove a number of backward chaining ``recommenders''. These rules are successfully proved when the knowledge engine finds a trip meeting the recommendation criteria \emph{and} the user indicates they would enjoy the trip. Therefore, if any of the rules can be proved, the program is complete.
+
+If none of the recommenders are proven, the frustration level is increased. Short term memory and long term memory are both writen to disk. The existing knowledge engine is deleted and a new one is created. Recreating the knowledge engine activates the forward chaining rules again, which respond by asking further questions of the user, after which the backward chaining rules again fire. Through this iterative process, the driver attempts to alternate between learning about the user, and suggesting places the user may enjoy. The frustration level guards against boring the user when the Travel Buddy is unable to be useful.
+
+
 The system architecture will be made up out of two main
 components. The first part is the knowledge base which contains all the
 information about the previous users of the program and
