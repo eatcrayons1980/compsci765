@@ -114,9 +114,9 @@ travelled_to('paul', 'utah')
 
 
 # Added 2015-05-24 17:06:09.616000
-has_activity('colorado', 'skiiing')
-has_activity('united states', 'skiiing')
-has_activity('north america', 'skiiing')
+has_activity('colorado', 'skiing')
+has_activity('united states', 'skiing')
+has_activity('north america', 'skiing')
 is_in('united states', 'north america')
 is_in('colorado', 'united states')
 logged_in('mark', '2015-05-24')
@@ -312,3 +312,23 @@ likes_activity('holly', 'walking')
 
 # Added 2015-05-30 18:19:12.444000
 likes_activity('holly', 'boat tour')
+
+
+# Added 2015-05-31 17:44:17.139851
+dislikes_activity('inga', 'surfing')
+has_activity('copenhagen', 'sightseeing')
+has_activity('denmark', 'sightseeing')
+has_activity('europe', 'sightseeing')
+is_in('europe', 'earth')
+is_in('copenhagen', 'denmark')
+is_in('denmark', 'europe')
+is_in('europe', 'solar system')
+is_in('denmark', 'solar system')
+is_in('copenhagen', 'solar system')
+is_in('copenhagen', 'europe')
+is_in('copenhagen', 'earth')
+is_in('denmark', 'earth')
+logged_in('inga', '2015-05-31')
+travelled_to('inga', 'copenhagen')
+weather_cond('copenhagen', 'rainy')
+

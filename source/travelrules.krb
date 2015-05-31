@@ -186,6 +186,8 @@ location_hierarchy_a
 
 # LOOP RULES (AFTER USER INITIALIZATION)
 
+
+
 # Infer other hierarchy facts.
 infer_hierarchy
     foreach
@@ -272,6 +274,14 @@ fc_extras
 
 # BACKWARD CHAINING RULES
 
+# check if frustration level was exceded
+exceded_frustration_level
+    use exceded_frustration_level()
+    when
+         shortterm.frustration($frustration,())
+         check $frustration > 100
+         python print "Seems like I can't help you with this. Maybe you're better off finding something on your own. Good luck!"
+
 recommender_same_activities
     use recommender_same_activities($place1, $random)
     when
@@ -281,23 +291,49 @@ recommender_same_activities
         longterm.has_activity($place1, $activity)
         longterm.has_activity($place2, $activity)
         check $place1 != $place2
+        shortterm.frustration($f, ())
+        forall
+            shortterm.frustration($f2, ())
+        require
+            check $f >= $f2
+        notany
+            shortterm.already_recommended($_, $f)
+        notany
+            shortterm.already_recommended($place1, $_)
+        
+        notany
+            longterm.travelled_to($user, $place1)
         notany
             longterm.is_in($place1, $place2)
         notany
             longterm.is_in($place2, $place1)
         notany
             travelrules.specific_location_activity($activity, $place1, $_)
+        python engine.assert_('shortterm', 'already_recommended', ($place1, $f))
         travelquestions.confirm_recommendation($place1, True)
 
 recommender_likes_activities
-    use recommender_likes_activities($place1, $random)
+    use recommender_likes_activities($place, $random)
     when
-        check $random < 20
+        check $random < 100
         shortterm.current_user($user, ())
         longterm.likes_activity($user, $activity)
         longterm.has_activity($place, $activity)
+        shortterm.frustration($f, ())
+        forall
+            shortterm.frustration($f2, ())
+        require
+            check $f >= $f2
+        notany
+            shortterm.already_recommended($_, $f)
+        notany
+            shortterm.already_recommended($place, $_)
+        notany
+            longterm.travelled_to($user, $place)
         notany
             travelrules.specific_location_activity($activity, $place, $_)
+        
+        python engine.assert_('shortterm', 'already_recommended', ($place, $f))
         travelquestions.confirm_recommendation($place, True)
 
 recommender_same_weather
@@ -309,8 +345,20 @@ recommender_same_weather
         longterm.weather_cond($place1, $weather)
         longterm.weather_cond($place2, $weather)
         check $place1 != $place2
+        shortterm.frustration($f, ())
+        forall
+            shortterm.frustration($f2, ())
+        require
+            check $f >= $f2
+        notany
+            shortterm.already_recommended($_, $f)
+        notany
+            shortterm.already_recommended($place1, $_)
+        notany
+            longterm.travelled_to($user, $place1)
         notany
             travelrules.specific_location_weather($weather, $place1, $_)
+        python engine.assert_('shortterm', 'already_recommended', ($place1, $f))
         travelquestions.confirm_recommendation($place1, True)
 
 recommender_same_weather_activities
@@ -324,6 +372,17 @@ recommender_same_weather_activities
         longterm.has_activity($place1, $activity)
         longterm.has_activity($place2, $activity)
         check $place1 != $place2
+        shortterm.frustration($f, ())
+        forall
+            shortterm.frustration($f2, ())
+        require
+            check $f >= $f2
+        notany
+            shortterm.already_recommended($_, $f)
+        notany
+            shortterm.already_recommended($place1, $_)
+        notany
+            longterm.travelled_to($user, $place1)
         notany
             longterm.is_in($place1, $place2)
         notany
@@ -332,6 +391,7 @@ recommender_same_weather_activities
             travelrules.specific_location_activity($activity, $place1, $_)
         notany
             travelrules.specific_location_weather($weather, $place1, $_)
+        python engine.assert_('shortterm', 'already_recommended', ($place1, $f))
         travelquestions.confirm_recommendation($place1, True)
 
 specific_location_activity
