@@ -7,3 +7,6 @@ pyke-1.1.1/build
 *.pyc
 *.bak
 compiled_krb
+~$*.pptx
+*.pdf
+*.aux
