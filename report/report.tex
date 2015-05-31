@@ -192,6 +192,20 @@ Assuming frustration is within guidelines, the driver attempts to prove a number
 
 If none of the recommenders are proven, the frustration level is increased. Short term memory and long term memory are both writen to disk. The existing knowledge engine is deleted and a new one is created. Recreating the knowledge engine activates the forward chaining rules again, which respond by asking further questions of the user, after which the backward chaining rules again fire. Through this iterative process, the driver attempts to alternate between learning about the user, and suggesting places the user may enjoy. The frustration level guards against boring the user when the Travel Buddy is unable to be useful.
 
+\subsubsection{Memory}
+The memory of the Travel Buddy is split into two files, \texttt{shortterm.kfb} and \texttt{longterm.kfb}. Both files are implemented as PyKE Knowledge Fact Base files and, therefore, consist of names attached to tuples of values, where each name/tuple pair represents a piece of knowledge for the system.
+
+The long term memory contains knowledge which is carried over from session to session. It contains facts about users who have previously logged into the system, such as: name, places travelled to, activities enjoyed, weather preferences, and friends. There are also facts about locations and their location within a global hierarchy. The final primary category of facts are those about activities, which specify which locations have certain activities and other minor details.
+
+During each session the system adds appropriate details to the long term memory as facts are learned from the user. For example, if the user answers that they like surfing, the system would record into the long term memory a fact relating the user to enjoying surfing. The long term memory, therefore, contains extensive data about all users who have logged into the system.
+
+The short term memory is used for temporary storage during each session. It contains many different kinds of facts. Certain system facts are stored in short term memory to track from where in the driver code the knowledge engine is being activated. 
+
+
+
+
+
+
 
 The system architecture will be made up out of two main
 components. The first part is the knowledge base which contains all the
