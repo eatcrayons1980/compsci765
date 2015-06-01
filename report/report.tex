@@ -6,6 +6,8 @@
 
 \documentclass[11pt]{article} % use larger type; default would be 10pt
 
+\usepackage{fancyvrb}
+
 \usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
 \usepackage{amssymb}
 %%% Examples of Article customizations
@@ -66,6 +68,7 @@
 %\tableofcontents
 %\newpage
 \section{Introduction}
+\subsection{Overview}
 The system we are developing is an interactive agent capable of
 engaging users in a dialog about travel. The agent will serve as
 a travel ``buddy'', by expressing an interest in the travel
@@ -75,7 +78,7 @@ to be engaging to each user, it attempts to achieve the primary
 goal by informing the users of experiences they might enjoy,
 based on the agent’s beliefs about the users. The purpose is only to provide inspiration for destinations, much like one would often do when conversing about travel. By contrast a travel reccommender system would simply just serve up a reccommendation and that would be it. Our conversation would only halt when the user no longer desires to converse with the agent, again much like how real conversations would end.
 
-\section{Motivation}
+\subsection{Motivation}
 Many existing interactive agents are essentially elaborate user
 interfaces for case-based reasoning backends or other data retrieval
 processes. Additionally, the notion of a basic companion agent has been
@@ -199,38 +202,54 @@ The long term memory contains knowledge which is carried over from session to se
 
 During each session the system adds appropriate details to the long term memory as facts are learned from the user. For example, if the user answers that they like surfing, the system would record into the long term memory a fact relating the user to enjoying surfing. The long term memory, therefore, contains extensive data about all users who have logged into the system.
 
-The short term memory is used for temporary storage during each session. It contains many different kinds of facts. Certain system facts are stored in short term memory to track from where in the driver code the knowledge engine is being activated. 
+The short term memory is used for temporary storage during each session. It contains many different kinds of facts. Certain system facts are stored in short term memory to track from where in the driver the knowledge engine is being activated. Other facts, such as those about the current user of the system and interaction with user during a session, are also stored in the short term memory. Finally, the short term memory is used for saving inferred knowledge which may take up lots of space and can easily be inferred again during later sessions.
 
+Separating the memory into these two areas was necessary due to the nature of how PyKE operates. PyKE runs all forward chaining rules at one time, during activation, before returning control to the driver. Because our system then attempts to obtain additional knowledge from the user, any learned knowledge will not be processed by PyKE without reloading the engine. Therefore, to preserve the short term ``session knowledge'', we put these facts in to the short term knowledge fact base. This fact base can then be activated after the engine is reloaded and our learned knowledge is restored.
 
+\subsubsection{Rules}
 
+There is one rule base for the system, contained within a file named \texttt{travelrules.krb}. The rules are written in PyKE's knowledge rule base syntax and consist of both forward chaining and backward chaining rules.
 
+Some rules are simple forward chaining inference rules.
+For example:
+\begin{Verbatim}[xleftmargin=2.5cm]
+associative_property_of_friendship
+    foreach
+        longterm.friends($person1, $person2)
+    assert
+        longterm.friends($person2, $person1)
+\end{Verbatim}
 
+The rule simply assumes that friendship is two-way. If we have learned that a user is friends with someone else, this will infer the reverse relationship.
 
+In addition to the straightforward rules, there are many more complicated rules. As mentioned previously, PyKE breaks rules into forward chaining annd backward chaining.
 
-The system architecture will be made up out of two main
-components. The first part is the knowledge base which contains all the
-information about the previous users of the program and
-all the trips our ``friend'' knows about. It also contains
-the user model that the program keeps of the current
-user, which contains all the beliefs about the user’s
-travel preferences. And also things that are still unknown
-and need to be known for the ``friend'' to make a suitable
-recommendation. The other part is the interpretation and
-mapping of the user input and the generation of useful
-agent output, both in the form of text.
+Forward chaining rules are all run when the rule base is activated. They are run continuously until none of the preconditions hold for any forward chaining rules. These rules can also assert facts, thus adding knowledge to the engine.
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=12cm]{architecture.png}
-\caption{Proposed design for the overall architecture.}
-\end{figure}
+Backward chaining rules are not run automatically by PyKE. Individual rules must be selected and the knowledge engine attempts to prove these rules by satisfying their arguments. During the proving process, the knowledge engine will often need to prove other backward chaining rules and look up facts from the fact bases. The knowledge engine then responds with either a proof or an error.
 
-The agent itself will be written and designed using the
-knowledge engine, PyKE, which is a Python module for logic
-programming based on the popular PROLOG language.
-PyKE provides us with three kinds of knowledge bases,
-the Knowledge Fact Base, the Knowledge Rule Base and
-the Knowledge Question Base.
+It is important to note that the PyKE system does not allow the backward chaining rules to assert new facts into the fact bases, nor will the forward chaining rules run after the initial rule base activation. It is possible to write facts into the fact base, however, they will not be used until the next activation of the rules.
+
+\subsubsection{Questions}
+A strong feature built-in to PyKE is its system for automatically asking questions of the user as needed. Any questions can be written into a knowledge question base. Each question has a unique name. These questions can then be used in both the forward chaining and backward chaining rules. When a rules encounters a question, it proceeds to prove it as it would any other condition. If the question variables are already bound, the question fails if the user answer does not match the bound value. If the variable is unbound, the user answer is bound to the variable and the question succeeds.
+
+Having this feature integrated into PyKE greatly eased the process of implementing a basic user interface. It also allows a much larger portion of the processing to be performed entirely within the knowledge engine. In turn, this reduced the number of times the rules base needed to be recompiled and reloaded.
+
+The following is the basic syntax of all questions:
+\begin{Verbatim}[xleftmargin=2.5cm]
+confirm_recommendation($place, $ans)
+    I think you would have a really good time in $place.
+    Do you think I'm right?
+    ---
+    $ans = yn
+        True ! I thought so. Be sure to tell me about it when you get back!
+\end{Verbatim}
+
+Arguments can be referenced within the question and the response can be bound to an argument, as well. In addition, a canned response, based on the answer provided, can be displayed to the user. The example above shows all these features used together.
+
+\subsection{User Modelling}
+
+This is user modelling.
 
 \subsection{Components}
 
