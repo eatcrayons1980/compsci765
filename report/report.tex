@@ -73,11 +73,10 @@
 The system we are developing is an interactive agent capable of
 engaging users in a dialog about travel. The agent will serve as
 a travel ``buddy'', by expressing an interest in the travel
-experiences of the user, and by talking about the travel
-experiences of others. While the primary goal of the agent is
+experiences of the user, and providing suggestion for potential future travel destinations. While the primary goal of the agent is
 to be engaging to each user, it attempts to achieve the primary
 goal by informing the users of experiences they might enjoy,
-based on the agent’s beliefs about the users. The purpose is only to provide inspiration for destinations, much like one would often do when conversing about travel. By contrast a travel reccommender system would simply just serve up a reccommendation and that would be it. Our conversation would only halt when the user no longer desires to converse with the agent, again much like how real conversations would end.
+based on the agent's beliefs about the users. The purpose is only to provide inspiration for destinations, much like one would often do when conversing about travel with a friend. By contrast a travel recommender system would simply serve up a recommendation and that would be it. Our conversation will halt when the user rejects all the systems recommendations and therefor seems 'frustrated' with the conversation.
 
 \subsection{Motivation}
 Many existing interactive agents are essentially elaborate user
@@ -86,19 +85,18 @@ processes. Additionally, the notion of a basic companion agent has been
 extensively researched. Our motivation is to provide a hybrid agent
 which provides enjoyable interaction for users while also providing
 indirect access to a knowledge base of data on a specific topic.
-Because we are not building a travel agent or a complete travel reccommender,
+Because we are not building a travel agent or a complete travel recommender,
 it allows us for more freedom as to what we would like to focus on with our agent. By initially 
 creating an agent which can retain simple facts about the user and then relate them to trips 
-they might find interesting, coupled with prying information out of the user through simple dialogue, we feel we could have something
-that could be a nice proof of concept. Further work could be to add more nuance to the conversation, such as talking about what the user could bring to certain locations or maybe making suggestions based on their possessions.
+they might find interesting, coupled with gathering information about the user through simple dialog, we built a system that serves as a nice proof of concept. In further work it would be possible to add more nuance to the conversation, such as talking about what the user could bring to certain locations or making suggestions based on their possessions.
 
-There will not a be a solution in the form of simply reccommending the perfect trip to the user. Our goal is rather to make a simple emulation of how a conversation about travel would unfold. This agent is able to use its a complex user model and extensive
+Our system will not provide a solution in the form of simply recommending the perfect trip to the user. Our goal is rather to make a simple emulation of how a conversation about travel would unfold. This agent is able to use its a complex user model and extensive
 knowledge base to engage a user in discovering their own solution.
 We feel that this approach increases the willingness to interact
 with the agent, thus giving more opportunities to solve the problem of getting inspiration for new holiday destinations.
 
 \section{Related Work}
-A joint project between researchers in the U.K. and Finland
+A joint project between researchers in the U.K. and Finland \cite{cavazza08}
 developed an Embodied Conversational Agent (ECA) to assist
 users in planning their day and reminding them to perform
 healthy activities. The system works by learning about the
@@ -117,21 +115,21 @@ or not. Through this approach, the agent attempts to be less
 intrusive in the users life, while still providing a relevant
 service in a friendly way.
 
-In an earlier work conducted by a research group in Italy an
+In an earlier work conducted by a research group in Italy \cite{ricci02} an
 Intelligent Travel Recommender (ITR) was developed which used
 case-based reasoning to provide the user with suitable
 suggestions concerning destination, accommodation and
 activities for an upcoming trip. The system uses a very
-simple interface for gathering the user’s preferences and
+simple interface for gathering the user's preferences and
 attempts to match their input to its trip databases. In case
 of failure, i.e. no matched could be found, it suggests a set
-of relaxations to the user’s selected preferences. Additional
+of relaxations to the user's selected preferences. Additional
 to this the system exploits case similarity with older sessions
 to rank the results of the user query by computing the
 similarities of the items of the current query to those
 obtained in similar previous sessions.
 
-The ITR is not a travel agent and doesn’t try to come up
+The Intelligent Travel Recommender is not a travel agent and doesn't try to come up
 with a conclusive travel plan, it rather suggests suitable
 locations, activities, etc. and lets the user collect the
 various trip components in their ``travel bag'' for later
@@ -177,7 +175,7 @@ The driver (implemented in the file driver.py) handles the
 basic control flow of a user interaction with the system.
 The driver starts the knowledge engine and 
 segments the types of interactions available
-with the knowledge engine and assists in modelling the
+with the knowledge engine and assists in modeling the
 user. Additionally, since PyKE allows forward-chaining to
 occur only once for each engine, the driver handles the
 creation of multiple engines based on the same knowledge
@@ -194,12 +192,12 @@ As Figure \ref{fig:driver} shows, the driver begins by erasing the short term me
 
 Assuming frustration is within guidelines, the driver attempts to prove a number of backward chaining ``recommenders''. These rules are successfully proved when the knowledge engine finds a trip meeting the recommendation criteria \emph{and} the user indicates they would enjoy the trip. Therefore, if any of the rules can be proved, the program is complete.
 
-If none of the recommenders are proven, the frustration level is increased. Short term memory and long term memory are both writen to disk. The existing knowledge engine is deleted and a new one is created. Recreating the knowledge engine activates the forward chaining rules again, which respond by asking further questions of the user, after which the backward chaining rules again fire. Through this iterative process, the driver attempts to alternate between learning about the user, and suggesting places the user may enjoy. The frustration level guards against boring the user when the Travel Buddy is unable to be useful.
+If none of the recommenders are proven, the frustration level is increased. Short term memory and long term memory are both written to disk. The existing knowledge engine is deleted and a new one is created. Recreating the knowledge engine activates the forward chaining rules again, which respond by asking further questions of the user, after which the backward chaining rules again fire. Through this iterative process, the driver attempts to alternate between learning about the user, and suggesting places the user may enjoy. The frustration level guards against boring the user when the Travel Buddy is unable to be useful.
 
 \subsubsection{Memory}
 The memory of the Travel Buddy is split into two files, \texttt{shortterm.kfb} and \texttt{longterm.kfb}. Both files are implemented as PyKE Knowledge Fact Base files and, therefore, consist of names attached to tuples of values, where each name/tuple pair represents a piece of knowledge for the system.
 
-The long term memory contains knowledge which is carried over from session to session. It contains facts about users who have previously logged into the system, such as: name, places travelled to, activities enjoyed, weather preferences, and friends. There are also facts about locations and their location within a global hierarchy. The final primary category of facts are those about activities, which specify which locations have certain activities and other minor details.
+The long term memory contains knowledge which is carried over from session to session. It contains facts about users who have previously logged into the system, such as: name, places traveled to, activities enjoyed, weather preferences, and friends. There are also facts about locations and their location within a global hierarchy. The final primary category of facts are those about activities, which specify which locations have certain activities and other minor details.
 
 During each session the system adds appropriate details to the long term memory as facts are learned from the user. For example, if the user answers that they like surfing, the system would record into the long term memory a fact relating the user to enjoying surfing. The long term memory, therefore, contains extensive data about all users who have logged into the system.
 
@@ -223,7 +221,7 @@ associative_property_of_friendship
 
 The rule simply assumes that friendship is two-way. If we have learned that a user is friends with someone else, this will infer the reverse relationship.
 
-In addition to the straightforward rules, there are many more complicated rules. As mentioned previously, PyKE breaks rules into forward chaining annd backward chaining.
+In addition to the straightforward rules, there are many more complicated rules. As mentioned previously, PyKE breaks rules into forward chaining and backward chaining.
 
 Forward chaining rules are all run when the rule base is activated. They are run continuously until none of the preconditions hold for any forward chaining rules. These rules can also assert facts, thus adding knowledge to the engine.
 
@@ -248,9 +246,9 @@ confirm_recommendation($place, $ans)
 
 Arguments can be referenced within the question and the response can be bound to an argument, as well. In addition, a canned response, based on the answer provided, can be displayed to the user. The example above shows all these features used together.
 
-\subsection{User Modelling}
+\subsection{User Modeling}
 
-As the user model was a focal component of this system, we placed signifcant effort into learning, representing, and remembering information about the user. In fact, beyond simply developing a model of the user during an interactive session, we remember information about all users of the system and store a great deal of information about each user into long term memory.
+As the user model was a focal component of this system, we placed significant effort into learning, representing, and remembering information about the user. In fact, beyond simply developing a model of the user during an interactive session, we remember information about all users of the system and store a great deal of information about each user into long term memory.
 
 For each user, we retain the following information in long term memory:
 \begin{multicols}{2}
@@ -258,7 +256,7 @@ For each user, we retain the following information in long term memory:
 \setlength\itemsep{0em}
 \item Name
 \item Login dates
-\item Locations travelled
+\item Locations traveled
 \item Activities liked
 \item Friends
 \item Location of residence
@@ -271,7 +269,7 @@ Some aspects of the user model, such as languages spoken, have not been implemen
 
 In addition the the long term storage of user data, several short term attributes are retained for the current user of the system.
 
-The most important of the short term attributes is that of frustration. Since our system does not attempt to optimize its travel recommendations and, instead, provides a more conversational manner of proposing trips, it was necessary to determine if we were being boring or simply unhelpful to the user. We model this as frustration. The value of frustration is initialized to zero and is only ever increased, much the way guilt has been modelled in other cognitive systems\cite{arkin09}. Although this is a simplistic representation, it servers ensure that the ``buddy'' doesn't continue making suggestions when the user is unhappy with the suggestions.
+The most important of the short term attributes is that of frustration. Since our system does not attempt to optimize its travel recommendations and, instead, provides a more conversational manner of proposing trips, it was necessary to determine if we were being boring or simply unhelpful to the user. We model this as frustration. The value of frustration is initialized to zero and is only ever increased, much the way guilt has been modeled in other cognitive systems\cite{arkin09}. Although this is a simplistic representation, it servers ensure that the ``buddy'' doesn't continue making suggestions when the user is unhappy with the suggestions.
 
 The user model is used during almost every step of the systems operation. The current user is the first fact stored into short term memory. Next, the initial dialog with the user is used to insert new facts about the user. Later in the session, as the system suggests places, the user model of activity likes, previous travel locations, and weather preferences are all used in an attempt to provide a good travel suggestion. Finally, when the user does not accept a proposal, the system attempts to learn more about the user before providing another suggestion.
 
@@ -284,27 +282,76 @@ The first rule to fire always prompts for, retrieves, and stores, the name of th
 
 After the dialog ends, the system consults all the facts known about the user. A series of backward chaining ``recommender'' rules are tested. This process results in the user possibly being presented with a trip based on the user model and a certain amount of randomness. The randomness is in place to ensure that each recommender rule is only used with a certain probability, thus preventing the same rule from being used every time.
 
-If the user accepts the proposed travel destination, the program terminates, happy to have proposed an accepted destination. Otherwise, the system attempts to learn something new about the user before proposing another destination.
+If the user accepts the proposed travel destination, the program terminates, happy to have proposed an acceptable destination. Otherwise, the system attempts to learn something new about the user before proposing another destination.
 
 Throughout the session, if the proposed destinations are rejected by the user, the system models this by increasing the frustration value in the user model. When the frustration level exceeds a threshold level, the agent ``bows out'' of the conversation by saying that it seems to be unable to assist the user in selecting a destination.
 
-An important aspect of our agent is that not all interactions are successful. The goal was to create an agent which was interactive an interesting, while also providing educated recommendations. However, despite sometimes receiving ``silly'' recommendations, the underlying rules are based on a solid user model. It is hoped that this form of interaction is more rewarding for the user, as if talking with a friend who occassionally says something funny.
+An important aspect of our agent is that not all interactions are successful. The goal was to create an agent which was interactive and interesting, while also providing educated recommendations. However, despite sometimes receiving ``silly'' recommendations, the underlying rules are based on a solid user model. It is hoped that this form of interaction is more rewarding for the user, as if talking with a friend who occasionally says something funny.
+
 
 \subsection{Operations}
 
 In order to build a working system, we will need different operations in order to deal with both interpreting the user input, retaining the informations gained from the interpretation and the mapping and then providing some kind of response. For our system we imagine there would be two different kinds of responses, questions and suggesting. Questions have the purpose of directly asking the user in order to clarify things for the user model. Suggestions can be served up as direct suggestions or be formulated as fabricated previous experiences for the agent to which the user can respond positively or negatively, thereby also providing insight to the user's preferences.
 We want to present these responses mostly at random in order to avoid making the conversation follow a set pattern.
-\\
-\\
-Our simple interpretation system would work by receiving some user input. Since we are not implementing an extensive natural language processing system, the next step would be to extract known keywords from the input, such as destination names and simple adjectives. Next, we will attempt to extract coherent facts from the keywords and save them to our knowledge base. So if the user inputs "I went to Tahiti. I love Tahiti!"  we save the fact that the user went to Tahiti in our knowledge base and another fact about how they see that destination in a very positive light. If there is some difficulty extracting facts from the keywords, perhaps because of conflicts, we might try to clarify by asking the user directly by presenting what the agent deems the most appropriate interpretation and getting their response. If the user des not accept the interpretation, the agent could try presenting another interpretation or just give a confused response.
-\\
+
+
+Our simple interpretation system would work by receiving some user input. Since we are not implementing an extensive natural language processing system, the next step would be to extract known keywords from the input, such as destination names and simple adjectives. Next, we will attempt to extract coherent facts from the keywords and save them to our knowledge base. So if the user inputs "I went to Tahiti. I love Tahiti!"  we save the fact that the user went to Tahiti in our knowledge base and another fact about how they see that destination in a very positive light. If there is some difficulty extracting facts from the keywords, perhaps because of conflicts, we might try to clarify by asking the user directly by presenting what the agent deems the most appropriate interpretation and getting their response. If the user does not accept the interpretation, the agent could try presenting another interpretation or just give a confused response.
+
 The user might also add general information about destinations or their personalities using these adjectives. By saying "I'm very adventurous.", the agent would update its facts by now adding the fact that they are adventurous. Or they could describe a destination as being relaxing or educating, which would in turn add more detail to the descriptions we have of certain trips.
-\\
-\\
+
+
 All of these gathered facts are then sometimes used for making suggestions or asking questions. We could for example use the fact that they went to Tahiti and liked it there to look up destinations which share the same characteristics. For this we have a collection of facts about the different destinations. So Tahiti might have a fact categorizing it as being a tropical destination. Doing simple matching, we might just end up pulling another destination which has this fact and suggesting it. During the matching process we will also try to filter out destinations which have characteristics which are seen negatively by the user. We can either completely rule them out or perhaps base our suggestions around a scoring system based on the features, such that some destinations are allowed despite their shortcomings.
-\\
-\\
-Generally the knowledge base is updated updated whenever the agent has an interpretation it is sure of which adds more information. Knowledge is retrieved when making suggestions or asking the user about their experiences or preferences.
+
+
+Generally the knowledge base is updated whenever the agent has an interpretation it is sure of which adds more information. Knowledge is retrieved when making suggestions or asking the user about their experiences or preferences.
+
+
+\section{Practical}
+
+\subsection{The Current System}
+Figure XXX shows an example of the running system after all forward chaining rules have been run. The system will first prompt for a user name and ask about any recent trips the user has been on. All information that is provided in this section will later be saved into longterm memory and will be available for future runs of the system. This means that every use of the system will extend the database of travelfacts.
+After acquiring these initial facts about the user, the system will then proceed to recommend locations to the user with a reason why this location was selected, or ask about their opinion on certain randomly selected activities. If a recommendation was not accepted it will not recommend anything new before it has gathered more information about the user.
+
+\subsubsection{Strength and Weaknesses}
+The system shows very good results with respect to matching activities of a location to activities that the user liked, or activities of places the user has visited before. This means the selected recommendations are always relevant to the user's interest and never completely random.
+The integration of the weather conditions of a particular location into the recommendation process is still lacking which we mostly attribute to the lack of information about the weather in the database which can easily be fixed by adding those facts to longterm memory.
+Recommendations can feel a bit random at times since the system considers all the information it has collected about the user when choosing a location and doesn't place more relevance on more recently acquired data.
+Once it has recommended a location and said location was rejected it will not recommend it again. So it will not pester the user to go to a specific location over and over again.
+Apart from the recommendation part of the system, the goal of providing a conversation like experience was not entirely reached. This is mostly due to PyKE's question/answer style of acquiring knowledge which does not lend itself easily to realize a natural feeling conversation. The questionbase does provide a good starting point though and could later be replaced by a natural language interface.
+
+\subsection{Future Work}
+The system has a lot of potential in various areas. 
+Obviously the recommendation based on the weather condition needs improvement which could likely be achieved by extending the factbase by providing weather information about the various locations in longterm memory.
+Naturally an extension of the factbase with respect to locations and location characteristics will provide more variety in the recommendations.
+Another obvious and easy extension might be to have the system display all the information about the current user that is already in the database after they entered their name to provided an overview of what the system already knows about the user. 
+Adding more characteristics to the user model, like relationships (friends, etc.), their inventory, or maybe the languages they speak, and use these facts for the matching process in a similar manner as for liked activities would make the recommendation process more interesting.
+In a similar way, similarities between places could be inferred by weather conditions, features, spoken language or geographical location.
+We could also determine the size of a location (i.e. if it is a city, a region or a country) from its place in the location hierarchy.
+To make the interaction feel more like a conversation than the current question/answer game we will integrate NLTK, python's natural language toolkit, to provide a user interface with the capability to process natural language and infer travelfacts and user likes and dislikes from the conversation.
+Natural language processing would also allow the user to ask questions and enquire about the overall location of a recommended place, for example the country or region it is in. Or the user could ask for specific activities of a place they are interested in, or other activities you can do at the recommended location. 
+
+%- display current knowledge about the user in the beginning (maybe try to implement) \\
+%- add more characteristics to user model (friends, inventory,...) \\
+%- integrate better natural language processing to infer travel facts and make interaction more of a conversation than a QA session \\
+%- improve rec based on weather \\
+%- extend database of travelfacts \\
+%- user interface \\
+%- find similarities between stuff \\
+%- determine size of location (city, region, country) from place in hierarchy \\
+ 
+\subsection{The Team}
+\subsubsection{Paul}
+% main part of  the coding work
+% provided travelfacts longterm 
+% report: design component
+\subsubsection{Diana}
+% nltk module that we lacked time to integrate into the main code
+% improved recommendation process
+% report: design, operations (4.4)
+\subsubsection{Inga}
+% provided travelfacts longterm 
+% extensions of code (questions and rules)
+% report: practical, improve motivation, added citations to related work
 
 \begin{thebibliography}{9}
 
