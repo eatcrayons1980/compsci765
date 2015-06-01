@@ -7,6 +7,7 @@
 \documentclass[11pt]{article} % use larger type; default would be 10pt
 
 \usepackage{fancyvrb}
+\usepackage{multicol}
 
 \usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
 \usepackage{amssymb}
@@ -242,14 +243,39 @@ confirm_recommendation($place, $ans)
     Do you think I'm right?
     ---
     $ans = yn
-        True ! I thought so. Be sure to tell me about it when you get back!
+        True ! I thought so.
 \end{Verbatim}
 
 Arguments can be referenced within the question and the response can be bound to an argument, as well. In addition, a canned response, based on the answer provided, can be displayed to the user. The example above shows all these features used together.
 
 \subsection{User Modelling}
 
-This is user modelling.
+As the user model was a focal component of this system, we placed signifcant effort into learning, representing, and remembering information about the user. In fact, beyond simply developing a model of the user during an interactive session, we remember information about all users of the system and store a great deal of information about each user into long term memory.
+
+For each user, we retain the following information in long term memory:
+\begin{multicols}{2}
+\begin{itemize}
+\setlength\itemsep{0em}
+\item Name
+\item Login dates
+\item Locations travelled
+\item Activities liked
+\item Friends
+\item Location of residence
+\item Possessions related to activities
+\item Languages spoken
+\end{itemize}
+\end{multicols}
+
+Some aspects of the user model, such as languages spoken, have not been implemented into any of the rules. Despite this, the facts have been left in the long term memory as a way of documenting possible directions for future work. In fact, the relative ease with which facts can be stored in the system allows expansion of the system to incorporate any variety of facts pertaining to the user.
+
+In addition the the long term storage of user data, several short term attributes are retained for the current user of the system.
+
+The most important of the short term attributes is that of frustration. Since our system does not attempt to optimize its travel recommendations and, instead, provides a more conversational manner of proposing trips, it was necessary to determine if we were being boring or simply unhelpful to the user. We model this as frustration. The value of frustration is initialized to zero and is only ever increased, much the way guilt has been modelled in other cognitive systems\cite{arkin09}. Although this is a simplistic representation, it servers ensure that the ``buddy'' doesn't continue making suggestions when the user is unhappy with the suggestions.
+
+The user model is used during almost every step of the systems operation. The current user is the first fact stored into short term memory. Next, the initial dialog with the user is used to insert new facts about the user. Later in the session, as the system suggests places, the user model of activity likes, previous travel locations, and weather preferences are all used in an attempt to provide a good travel suggestion. Finally, when the user does not accept a proposal, the system attempts to learn more about the user before providing another suggestion.
+
+Although the user model is simple, it has proven adequate for the current state of the system. It would be easy to expand the user model to include other attributes, as we document in the future works section.
 
 \subsection{Components}
 
@@ -297,10 +323,18 @@ All of these gathered facts are then sometimes used for making suggestions or as
 \\
 \\
 Generally the knowledge base is updated updated whenever the agent has an interpretation it is sure of which adds more information. Knowledge is retrieved when making suggestions or asking the user about their experiences or preferences.
-\section{References}
-%References and such
-(1) Marc Cavazza, Cameron Smith, Daniel Charlton, Li Zhang, Markku Turunen, and Jaakko Hakulinen. 2008. A 'companion' ECA with planning and activity modelling. In Proceedings of the 7th international joint conference on Autonomous agents and multiagent systems - Volume 3(AAMAS '08), Vol. 3. International Foundation for Autonomous Agents and Multiagent Systems, Richland, SC, 1281-1284.\\
-(2) Ricci, Francesco, et al. "ITR: a case-based travel advisory system." Advances in Case-Based Reasoning. Springer Berlin Heidelberg, 2002. 613-627.\\
-(3) Loper, Edward, and Steven Bird. "NLTK: The natural language toolkit." Proceedings of the ACL-02 Workshop on Effective tools and methodologies for teaching natural language processing and computational linguistics-Volume 1. Association for Computational Linguistics, 2002.
+
+\begin{thebibliography}{9}
+
+\bibitem{arkin09}
+Arkin, A. C., \& Ulam, P. (2009). \emph{An ethical adaptor: behavioral modification derived from moral emotions}. Proceedings of the Eighth IEEE International Conference on Computational Intelligence in Robotics and Automation (pp. 381-387). IEEE Press.
+\bibitem{cavazza08}
+Marc Cavazza, Cameron Smith, Daniel Charlton, Li Zhang, Markku Turunen, and Jaakko Hakulinen. 2008. \emph{A `companion' ECA with planning and activity modelling}. In Proceedings of the 7th international joint conference on Autonomous agents and multiagent systems - Volume 3(AAMAS '08), Vol. 3. International Foundation for Autonomous Agents and Multiagent Systems, Richland, SC, 1281-1284.
+\bibitem{ricci02}
+Ricci, Francesco, et al. \emph{ITR: a case-based travel advisory system}. Advances in Case-Based Reasoning. Springer Berlin Heidelberg, 2002. 613-627.
+\bibitem{loper02}
+Loper, Edward, and Steven Bird. \emph{NLTK: The natural language toolkit}. Proceedings of the ACL-02 Workshop on Effective tools and methodologies for teaching natural language processing and computational linguistics-Volume 1. Association for Computational Linguistics, 2002.
+
+\end{thebibliography}
 
 \end{document}
