@@ -310,7 +310,7 @@ recommender_same_activities
         notany
             travelrules.specific_location_activity($activity, $place1, $_)
         python engine.assert_('shortterm', 'already_recommended', ($place1, $f))
-        travelquestions.confirm_recommendation($place1, True)
+        travelquestions.confirm_recommendation_place_same_activity($place1, $place2, $activity, True)
 
 recommender_likes_activities
     use recommender_likes_activities($place, $random)
@@ -334,7 +334,7 @@ recommender_likes_activities
             travelrules.specific_location_activity($activity, $place, $_)
         
         python engine.assert_('shortterm', 'already_recommended', ($place, $f))
-        travelquestions.confirm_recommendation($place, True)
+        travelquestions.confirm_recommendation_place_like_activity($place, $activity, True)
 
 recommender_same_weather
     use recommender_same_weather($place1,$random)
@@ -359,7 +359,7 @@ recommender_same_weather
         notany
             travelrules.specific_location_weather($weather, $place1, $_)
         python engine.assert_('shortterm', 'already_recommended', ($place1, $f))
-        travelquestions.confirm_recommendation($place1, True)
+        travelquestions.confirm_recommendation_same_weather($place1, $place2, $weather, True)
 
 recommender_same_weather_activities
     use recommender_same_weather($place1,$random)
@@ -392,7 +392,7 @@ recommender_same_weather_activities
         notany
             travelrules.specific_location_weather($weather, $place1, $_)
         python engine.assert_('shortterm', 'already_recommended', ($place1, $f))
-        travelquestions.confirm_recommendation($place1, True)
+        travelquestions.confirm_recommendation_same_weather_activity($place1, $place2, $weather, $activity, True)
 
 specific_location_activity
     use specific_location_activity($activity, $place, $subplace)

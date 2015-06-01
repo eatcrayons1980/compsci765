@@ -39,8 +39,29 @@ location_hierarchy_a($place1, $place2)
     ---
     $place1 = string(2-40)
 
-confirm_recommendation($place, $ans)
-    I think you would have a really good time in $place.
+confirm_recommendation_place_same_activity($place1, $place2, $activity, $ans)
+    I think you would have a really good time in $place1 since you can do $activity like in $place2.
+    Do you think I'm right?
+    ---
+    $ans = yn
+        True ! I thought so. Be sure to tell me about it when you get back!
+
+confirm_recommendation_place_same_weather($place1, $place2, $weather, $ans)
+    I think you would have a really good time in $place1 since it has the same weather ($weather) as $place2.
+    Do you think I'm right?
+    ---
+    $ans = yn
+        True ! I thought so. Be sure to tell me about it when you get back!
+
+confirm_recommendation_place_same_weather_activity($place1, $place2, $weather, $activity, $ans)
+    I think you would have a really good time in $place1 since it has the same weather ($weather) as $place2 and you can do $activity like in $place2.
+    Do you think I'm right?
+    ---
+    $ans = yn
+        True ! I thought so. Be sure to tell me about it when you get back!
+
+confirm_recommendation_place_like_activity($place, $activity, $ans)
+    I think you would have a really good time in $place since you like $activity.
     Do you think I'm right?
     ---
     $ans = yn
