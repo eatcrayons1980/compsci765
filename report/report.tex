@@ -277,36 +277,18 @@ The user model is used during almost every step of the systems operation. The cu
 
 Although the user model is simple, it has proven adequate for the current state of the system. It would be easy to expand the user model to include other attributes, as we document in the future works section.
 
-\subsection{Components}
+\subsection{Planning Logic}
+Every session with a given user begins by erasing the short term memory and then activating the knowledge rule base. In doing this, the knowledge engine loads all the facts from the knowledge fact bases and begins running the forward chaining rules.
 
-The Knowledge Fact Base will contain all the facts we
-know about the user, such as; name, previous trips, travel
-possessions, the trips themselves (with associated
-locations, weather conditions, interesting sites,
-attractions, and activities).
+The first rule to fire always prompts for, retrieves, and stores, the name of the current user. Following this trivial step, the begins a friendly ``catch up'' dialog. During the dialog, the system asks if the user has been on a recent trip and, if so, asks for details about the trip. This step mimics a conversation with a friend who has not been seen in a while and who simply want to know what's been happening.
 
-The Rule Base will be used to encode how the program
-will make connections between the user’s preferences
-stored as beliefs and the trips. It will also try to match
-the user to other users in its knowledge base to find
-trips that similar users have taken and enjoyed and
-recommend them to the current user.
+After the dialog ends, the system consults all the facts known about the user. A series of backward chaining ``recommender'' rules are tested. This process results in the user possibly being presented with a trip based on the user model and a certain amount of randomness. The randomness is in place to ensure that each recommender rule is only used with a certain probability, thus preventing the same rule from being used every time.
 
-The Question Base can be used to store questions to ask
-the user to enquire about their preferences. The
-structure of this seems a little inflexible though
-upon first impression since we aim for a more natural
-feeling dialog than pre-coded questions so the usefulness
-of this tool for our system is still up for debate.
+If the user accepts the proposed travel destination, the program terminates, happy to have proposed an accepted destination. Otherwise, the system attempts to learn something new about the user before proposing another destination.
 
-A different option for realising a natural language
-user dialog is employing the Natural Language Toolkit
-(NLTK) for python. NLTK provides different modules
-for natural language processing such as lexicons,
-parsers or text classification that can be used to
-map the user input to a number of discourse acts in
-order to extract the relevant information and update
-the belief system.
+Throughout the session, if the proposed destinations are rejected by the user, the system models this by increasing the frustration value in the user model. When the frustration level exceeds a threshold level, the agent ``bows out'' of the conversation by saying that it seems to be unable to assist the user in selecting a destination.
+
+An important aspect of our agent is that not all interactions are successful. The goal was to create an agent which was interactive an interesting, while also providing educated recommendations. However, despite sometimes receiving ``silly'' recommendations, the underlying rules are based on a solid user model. It is hoped that this form of interaction is more rewarding for the user, as if talking with a friend who occassionally says something funny.
 
 \subsection{Operations}
 
