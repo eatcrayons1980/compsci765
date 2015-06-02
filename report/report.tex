@@ -136,19 +136,34 @@ various trip components in their ``travel bag'' for later
 review much like a shopping cart at an online shop. 
 
 \section{Analysis}
-Our analysis will be broken into several steps. At the
-base level, our discovery process will include interviews
-with ``experienced travellers''. These people will be used
-to gather information for our knowledge base, as well as
-provide us with an idea of topics of discussion during a
-conversation about travel. Other travel information will
-be gathered, as needed, from travel blogs and forums.
+Analysis is one of the more complicated steps when developing a prototype system in a short amount of time. But despite the challenges of approaching such a problem, proper time spent planning out the system ofter serves to provide a more complete system in the end.
 
-Beyond interviews, the analysis process will include a
-variety of diagrams showing the interaction of ideas
-within our knowledge base. Process diagrams will be used
-to layout the order of events the agent moves through
-before presenting a response to the user.
+For the Travel Buddy agent, our initial discover phase involved gathering together the information that a friend would either have or need during a discussion about travel. The facts and ideas from this step led to defining a process which would be used as the framework for the system. As development continued, we explored the way facts fit together to form rules, the way natural hierarchies emerged from the data, and the ways all these systems influences each other.
+
+\subsection{Discovery}
+The foundation of the interactive cognitive agent revolves around the basic notion of a ``buddy''. A buddy isn't someone you talk to when you need to solve a problem, and they aren't the person who always gives good advice. A buddy is simply someone who is interested in you and your activities and wants to talk with you. In this case, your buddy wants to talk to you about travel.
+
+The ideal travel buddy is always thinking about travel. During an interaction, they are excited to hear about your travels and they want to know all the details. And because the travel buddy is so interested in travel, each story they hear about a trip makes them think of other journeys that others have had. The travel buddy can reason about all the places it knows about. The travel buddy knows you and what you like. The travel buddy can't help but suggest more adventures for you to go on in the future. It was on this foundation that we constructed the Travel Buddy agent.
+
+Our discovery phase began with online travel blogs\cite{kate15}\cite{amanda15}. Travel bloggers naturally enjoy talking about travel and if was felt that this would be a great place to explore the information needed in a travel discussion. From the travel blogs, facts were extracted and added in to the knowledge fact base. This information would serve to seed the sessions with the agent and provide some context.
+
+\subsection{Process Diagrams}
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{driver_control_flow.png}
+\caption{Implemented control flow of the main driver.\label{fig:driver}}
+\end{figure}
+
+Figure \ref{fig:driver} documents the primary control of the agent. Although the details of this system will be covered within the design section, it should be noted that this process changed very little from initial discussion regarding the operation of the system. It was determined that the initial catch up phase with the user was important, and this was retained throughout development. Additionally, the early idea of programming in an exchange, whereby the agent alternates between asking questions and providing suggestions, was developed almost completely as envisioned.
+
+Although, initially, the designs suggested needing more process diagrams, the amount of work that could be performed with the PyKE engine was underestimated. Of course, within the PyKE library, there are an extensive number of interactions occuring. However, as the PyKE library is nothing more than a tool of the system, the internal workings of PyKE will not be described here. Interested readers can explore the PyKE documentation directly\cite{pyke}.
+
+\subsection{Influence Diagrams}
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{location_hierarchy.png}
+\caption{Automatic building of location hierarchy.\label{fig:hierarchy1}}
+\end{figure}
 Influence diagrams will document information in the
 knowledge base that could potentially change beliefs
 in other areas. For instance, if the agent adds a belief
@@ -181,12 +196,6 @@ occur only once for each engine, the driver handles the
 creation of multiple engines based on the same knowledge
 base in order to facilitate different executions of
 forward-chaining rules.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=12cm]{driver_control_flow.png}
-\caption{Implemented control flow of the main driver.\label{fig:driver}}
-\end{figure}
 
 As Figure \ref{fig:driver} shows, the driver begins by erasing the short term memory file and setting the user frustration level to zero. Following these initialization steps, the knowledge engine is activated for the first time. Within the knowledge engine, a number of forward chaining rules run to initialize the session and acquire knowledge about the user. After the completion of the forward chaining rules, the user frustration level is compared to the threshold and the program exits if it is determined the we have been unable to suggest a trip in a reasonable time.
 
@@ -355,14 +364,21 @@ Natural language processing would also allow the user to ask questions and enqui
 
 \begin{thebibliography}{9}
 
+\bibitem{amanda15}
+Amanda (2015) \emph{A dangerous business travel blog}. www.dangerous-business.com
 \bibitem{arkin09}
 Arkin, A. C., \& Ulam, P. (2009). \emph{An ethical adaptor: behavioral modification derived from moral emotions}. Proceedings of the Eighth IEEE International Conference on Computational Intelligence in Robotics and Automation (pp. 381-387). IEEE Press.
 \bibitem{cavazza08}
 Marc Cavazza, Cameron Smith, Daniel Charlton, Li Zhang, Markku Turunen, and Jaakko Hakulinen. 2008. \emph{A `companion' ECA with planning and activity modelling}. In Proceedings of the 7th international joint conference on Autonomous agents and multiagent systems - Volume 3(AAMAS '08), Vol. 3. International Foundation for Autonomous Agents and Multiagent Systems, Richland, SC, 1281-1284.
-\bibitem{ricci02}
-Ricci, Francesco, et al. \emph{ITR: a case-based travel advisory system}. Advances in Case-Based Reasoning. Springer Berlin Heidelberg, 2002. 613-627.
+\bibitem{kate15}
+McCully, Kate. (2015) \emph{Adventurous Kate's solo female travel blog}. www.adventurouskate.com
 \bibitem{loper02}
 Loper, Edward, and Steven Bird. \emph{NLTK: The natural language toolkit}. Proceedings of the ACL-02 Workshop on Effective tools and methodologies for teaching natural language processing and computational linguistics-Volume 1. Association for Computational Linguistics, 2002.
+\bibitem{pyke}
+Frederiksen, Bruce. (2009). \emph{PyKE python knowledge engine}. pyke.sourceforge.net
+\bibitem{ricci02}
+Ricci, Francesco, et al. \emph{ITR: a case-based travel advisory system}. Advances in Case-Based Reasoning. Springer Berlin Heidelberg, 2002. 613-627.
+
 
 \end{thebibliography}
 
