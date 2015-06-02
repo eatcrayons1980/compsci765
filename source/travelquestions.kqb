@@ -7,33 +7,40 @@ weather_trip($ans)
 	What was the weather on the trip?
 	---
 	$ans = string(2-40)
-
+        hot ! You must have a nice tan now then!
+        warm ! Warm is always nice, you can pack lighter!
+        cold ! I good winter coat will do.
+        freezing ! Brr, I feel chilly just imagining it!
+        rainy ! The sun must have been a sight for sore eyes!
 new_trip($ans)
     Have you been on any new trips recently?
     ---
     $ans = yn
         True ! Oh, wow! I'd love to hear about it.
-
+        False ! Ah, alright.
 new_trip_location($place)
     Where did you go?
     ---
     $place = string(2-40)
-
+        earth ! Oh Earth? I think I have heard about that place...
+        nowhere ! Nowhere? Hmm, can't say I know much about that place...
 trip_activity_1($activity)
     What did you do there?
     ---
     $activity = string(2-40)
-
+        nothing ! Oh nothing? Haha, okay.
 trip_activity_2($activity, $value)
     Did you do anything else?
     ---
     $activity = string(2-40)
-
+        nothing ! Nothing? Okay.
 location_hierarchy($place1, $place2)
     I've never heard of $place2. Where is it located?
     ---
     $place1 = string(2-40)
-
+        earth ! Oh Earth? I think I have heard about that place...
+        nowhere ! Nowhere? Hmm, can't say I know much about that place...
+        idk ! You don't know? Haha, okay!
 location_hierarchy_a($place1, $place2)
     Where did you go in $place2?
     ---
@@ -45,28 +52,28 @@ confirm_recommendation_place_same_activity($place1, $place2, $activity, $ans)
     ---
     $ans = yn
         True ! I thought so. Be sure to tell me about it when you get back!
-
+        False ! Aw, I was pretty sure as well!
 confirm_recommendation_place_same_weather($place1, $place2, $weather, $ans)
     I think you would have a really good time in $place1 since it has the same weather ($weather) as $place2.
     Do you think I'm right?
     ---
     $ans = yn
         True ! I thought so. Be sure to tell me about it when you get back!
-
+        False ! Aw, I was pretty sure as well!
 confirm_recommendation_place_same_weather_activity($place1, $place2, $weather, $activity, $ans)
     I think you would have a really good time in $place1 since it has the same weather ($weather) as $place2 and you can do $activity like in $place2.
     Do you think I'm right?
     ---
     $ans = yn
         True ! I thought so. Be sure to tell me about it when you get back!
-
+        False ! Aw, I was pretty sure as well!
 confirm_recommendation_place_like_activity($place, $activity, $ans)
     I think you would have a really good time in $place since you like $activity.
     Do you think I'm right?
     ---
     $ans = yn
         True ! I thought so. Be sure to tell me about it when you get back!
-
+        False ! Aw, I was pretty sure as well!
 q_likes_activity($activity, $ans)
     I know some places that are good for $activity.
     Do you like $activity?

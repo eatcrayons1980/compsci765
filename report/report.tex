@@ -161,7 +161,7 @@ Our discovery phase began with online travel blogs\cite{kate15}\cite{amanda15}. 
 
 Figure \ref{fig:driver} documents the primary control of the agent. Although the details of this system will be covered within the design section, it should be noted that this process changed very little from initial discussion regarding the operation of the system. It was determined that the initial catch up phase with the user was important, and this was retained throughout development. Additionally, the early idea of programming in an exchange, whereby the agent alternates between asking questions and providing suggestions, was developed almost completely as envisioned.
 
-Although, initially, the designs suggested needing more process diagrams, the amount of work that could be performed with the PyKE engine was underestimated. Of course, within the PyKE library, there are an extensive number of interactions occuring. However, as the PyKE library is nothing more than a tool of the system, the internal workings of PyKE will not be described here. Interested readers can explore the PyKE documentation directly\cite{pyke}.
+Although, initially, the designs suggested needing more process diagrams, the amount of work that could be performed with the PyKE engine was underestimated. Of course, within the PyKE library, there are an extensive number of interactions occurring. However, as the PyKE library is nothing more than a tool of the system, the internal workings of PyKE will not be described here. Interested readers can explore the PyKE documentation directly\cite{pyke}.
 
 \subsection{Influence Diagrams}
 \begin{figure}[!htb]
@@ -342,9 +342,34 @@ Naturally an extension of the factbase with respect to locations and location ch
 Another obvious and easy extension might be to have the system display all the information about the current user that is already in the database after they entered their name to provided an overview of what the system already knows about the user. 
 Adding more characteristics to the user model, like relationships (friends, etc.), their inventory, or maybe the languages they speak, and use these facts for the matching process in a similar manner as for liked activities would make the recommendation process more interesting.
 In a similar way, similarities between places could be inferred by weather conditions, features, spoken language or geographical location.
+The way we contain locations in our system allows for quick learning of hierarchies. However, since we lack information about locations, such as whether they are a city, country or continent, the agent lacks a degree of nuance in that area.
+While recommending the most specific place to the user works fine, being able to also recommend countries or cities in some cases would make the agent more believable. When people talk about traveling, 
+often times they don't talk about specific cities on their own, they talk about the area or country. With our current system of simple hierarchical relations, we could still generate sentences such as "Denver, Colorado". 
+But by keeping track of the category of a location, we could generate sentences such as "The city of Denver is in the state of Colorado." and we would be able to change up our recommendation to sometimes suggest locations 
+with a lower specificity. A concrete case where this could be applied would be if a location is not well traveled. If the agent finds that few users have traveled to the location it is recommending, it could sometimes instead 
+reduce the level of specificity to recommend something more general. Or it could use the information gathered about the location to also present it in relation to another area which contains it. This would make 
+a recommendation feel more natural and engaging, as the agent would do what most people do if they are talking about obscure topics. In order to implement this, the agent would only need to ask what kind of location it is when a new location is presented by the user.
+We did not implement this because we thought of it much later in the process of the implementation, making it too late to revamp the system. Since it was not vital, we did not put much focus into this.
 We could also determine the size of a location (i.e. if it is a city, a region or a country) from its place in the location hierarchy, and recognize places that were spelled differently but obviously mean the same thing such as 'the united states of america' and 'the usa'.
-To make the interaction feel more like a conversation than the current question/answer game we will integrate NLTK, python's natural language toolkit, to provide a user interface with the capability to process natural language and infer travelfacts and user likes and dislikes from the conversation.
-Natural language processing would also allow the user to ask questions themselves and inquire about the overall location of a recommended place, for example the country or region it is in. Or the user could ask for specific activities of a place they are interested in, or other activities you can do at the recommended location. 
+
+
+During the development of our system, we experimented with different approaches in order to make the agent as engaging as possible. To make the interaction feel more like a conversation than the current question/answer game we will integrate NLTK, python's natural language toolkit, to provide a user interface with the capability to process natural language and infer travelfacts and user likes and dislikes from the conversation. 
+During development a simple interpreter was built in python, using the NLTK package wordnet. 
+The interpreter component would have a small vocabulary based on words often used when talking about travel. Interpretation would be done word by word, matching each word to 
+the vocabulary or to a set of synonyms generated by wordnet. A match would associate annotations with the word and would improve the overall score of a sentence in regards to said annotations.
+Lastly it would attempt to use the knowledge base in order to match words which fell through the initial vocabulary and synonym check, in order to match proper nouns and activities. 
+The result was then a set of annotations, which could be matched against one of the predefined cases, such as expressing a preference, talking about having traveled somewhere or describing oneself. 
+These cases would then contain an action the agent could perform in order to react to the given input. The reason why we did not integrate this into the final version was because the agent mostly takes charge on its own, while the component was 
+written with the opposite in mind. There is also the fact that it was difficult integrating the pure python interpreter into the PyKE rules and questions, as PyKE mostly handles the user input through 
+the questions it presents the user. The question file allows almost no tinkering, outside of presenting exact match answers or answers for patterns.
+
+Natural language processing would also allow the user to ask questions themselves and inquire about the overall location of a recommended place, for example the country or region it is in. Or the user could ask for specific activities of a place they are interested in, or other activities you can do at the recommended location. In relation to our recommenders, we also attempted to add some variety by optimizing the place suggested to the user, such that the agent could sometimes suggest a location which had the highest 
+number of activities the user might enjoy instead of just one. At a simpler iteration of the system we got it to work, but it stopped producing results later after ensuring that the agent does not 
+recommend something it has already recommended in the same session. This may be due to the many new constraints imposed on a candidate location. Suggesting the very best match relied on 
+finding a location such that no other location would have a higher score of activities. This also means that the secondary locations need to be constrained such that we can still find results 
+if the user has already been to the very best location or we have already recommended such a place. Otherwise, the agent would conclude there is no better match and do nothing. While this was 
+accounted for, the issues still persisted and the method was abandoned. This may also be because of the specificity constraint on locations. Without the constraint, any match would lose to locations such as 'earth',
+ since such locations contain a high number of activities.
 
 %- display current knowledge about the user in the beginning (maybe try to implement) \\
 %- add more characteristics to user model (friends, inventory,...) \\

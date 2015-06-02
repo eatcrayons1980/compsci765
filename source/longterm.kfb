@@ -332,3 +332,237 @@ logged_in('inga', '2015-05-31')
 travelled_to('inga', 'copenhagen')
 weather_cond('copenhagen', 'rainy')
 
+
+
+# Added 2015-06-02 16:30:33.370535
+has_activity('melbourne', 'sightseeing')
+has_activity('melbourne', 'shopping')
+has_activity('australia', 'shopping')
+has_activity('australia', 'sightseeing')
+is_in('melbourne', 'australia')
+is_in('melbourne', 'earth')
+is_in('melbourne', 'solar system')
+likes_activity('inga', 'relaxing')
+logged_in('inga', '2015-06-02')
+travelled_to('inga', 'melbourne')
+weather_cond('melbourne', 'warm')
+
+
+# Added 2015-06-02 16:30:49.323573
+likes_activity('inga', 'walking')
+
+
+# Added 2015-06-02 16:30:54.875705
+likes_activity('inga', 'boat tour')
+
+
+# Added 2015-06-02 16:31:01.609174
+likes_activity('inga', 'swimming')
+
+
+# Added 2015-06-02 16:31:07.549380
+likes_activity('inga', 'sightseeing')
+
+
+# Added 2015-06-02 16:31:17.566390
+likes_activity('inga', 'shopping')
+
+
+# Added 2015-06-02 16:31:25.127589
+likes_activity('inga', 'hiking')
+
+
+# Added 2015-06-02 16:31:33.298019
+dislikes_activity('inga', 'donkey rides')
+
+
+# Added 2015-06-02 16:31:40.362788
+likes_activity('inga', 'rafting')
+
+
+# Added 2015-06-02 16:31:45.564839
+dislikes_activity('inga', 'helicopter flights')
+
+
+# Added 2015-06-02 16:31:47.732485
+likes_activity('inga', 'rock climbing')
+
+
+# Added 2015-06-02 16:31:49.935925
+dislikes_activity('inga', 'gambling')
+
+
+# Added 2015-06-02 16:31:52.137308
+dislikes_activity('inga', 'skiing')
+
+
+# Added 2015-06-02 16:31:54.379733
+likes_activity('inga', 'biking')
+
+
+# Added 2015-06-02 16:31:56.685890
+likes_activity('inga', 'diving')
+
+
+# Added 2015-06-02 16:32:02.288985
+dislikes_activity('inga', 'camping')
+
+
+# Added 2015-06-02 16:32:03.773640
+likes_activity('inga', 'eating')
+
+
+# Added 2015-06-02 16:32:05.135895
+likes_activity('inga', 'wine tasting')
+
+
+# Added 2015-06-02 16:32:13.725329
+dislikes_activity('inga', 'sporting')
+
+
+# Added 2015-06-02 16:32:15.419595
+likes_activity('inga', 'horseback riding')
+
+
+# Added 2015-06-02 16:32:19.821640
+dislikes_activity('inga', 'donkey riding')
+
+
+# Added 2015-06-02 16:32:20.139958
+
+
+# Added 2015-06-02 16:32:20.250353
+
+
+# Added 2015-06-02 16:33:51.511908
+has_activity('berlin', 'sightseeing')
+has_activity('berlin', 'shopping')
+has_activity('berlin', 'boat tour')
+has_activity('berlin', 'eating')
+has_activity('germany', 'shopping')
+has_activity('germany', 'boat tour')
+has_activity('germany', 'eating')
+has_activity('germany', 'sightseeing')
+has_activity('europe', 'shopping')
+has_activity('europe', 'boat tour')
+has_activity('europe', 'eating')
+is_in('germany', 'europe')
+is_in('berlin', 'germany')
+is_in('germany', 'earth')
+is_in('germany', 'solar system')
+is_in('berlin', 'solar system')
+is_in('berlin', 'earth')
+is_in('berlin', 'europe')
+likes_activity('lisa', 'surfing')
+logged_in('lisa', '2015-06-02')
+travelled_to('lisa', 'berlin')
+weather_cond('berlin', 'warm')
+
+
+# Added 2015-06-02 16:33:56.124943
+likes_activity('lisa', 'relaxing')
+
+
+# Added 2015-06-02 16:33:58.000688
+likes_activity('lisa', 'walking')
+
+
+# Added 2015-06-02 16:33:59.392516
+likes_activity('lisa', 'boat tour')
+
+
+# Added 2015-06-02 16:34:05.577273
+likes_activity('lisa', 'swimming')
+
+
+# Added 2015-06-02 16:34:06.923150
+likes_activity('lisa', 'sightseeing')
+
+
+# Added 2015-06-02 16:34:27.396510
+likes_activity('lisa', 'shopping')
+
+
+# Added 2015-06-02 16:34:28.927764
+likes_activity('lisa', 'hiking')
+
+
+# Added 2015-06-02 16:34:41.776391
+dislikes_activity('lisa', 'donkey rides')
+
+
+# Added 2015-06-02 16:34:46.921270
+dislikes_activity('lisa', 'rafting')
+
+
+# Added 2015-06-02 16:34:51.314495
+dislikes_activity('lisa', 'helicopter flights')
+
+
+# Added 2015-06-02 16:34:57.794941
+likes_activity('lisa', 'rock climbing')
+
+
+# Added 2015-06-02 16:35:00.635208
+
+
+# Added 2015-06-02 16:36:50.467206
+dislikes_activity('moira', 'surfing')
+has_activity('bath', 'sightseeing')
+has_activity('bath', 'shopping')
+has_activity('bath', 'eating')
+has_activity('bath', 'walking')
+has_activity('england', 'shopping')
+has_activity('england', 'eating')
+has_activity('england', 'walking')
+has_activity('england', 'sightseeing')
+has_activity('europe', 'walking')
+is_in('england', 'europe')
+is_in('bath', 'england')
+is_in('england', 'earth')
+is_in('england', 'solar system')
+is_in('bath', 'solar system')
+is_in('bath', 'earth')
+is_in('bath', 'europe')
+logged_in('moira', '2015-06-02')
+travelled_to('moira', 'bath')
+weather_cond('bath', 'warm')
+
+
+# Added 2015-06-02 16:36:52.481685
+likes_activity('moira', 'relaxing')
+
+
+# Added 2015-06-02 16:37:00.796816
+likes_activity('moira', 'walking')
+
+
+# Added 2015-06-02 16:37:02.043798
+likes_activity('moira', 'boat tour')
+
+
+# Added 2015-06-02 16:37:05.031300
+
+
+# Added 2015-06-02 16:48:52.422683
+has_activity('bath', 'playing floorball')
+has_activity('bath', 'relaxing')
+likes_activity('bradley', 'surfing')
+logged_in('bradley', '2015-06-02')
+travelled_to('bradley', 'bath')
+weather_cond('bath', 'rainy')
+
+
+# Added 2015-06-02 16:49:05.100809
+likes_activity('bradley', 'relaxing')
+
+
+# Added 2015-06-02 16:49:24.666194
+dislikes_activity('bradley', 'walking')
+
+
+# Added 2015-06-02 16:49:36.573647
+likes_activity('bradley', 'boat tour')
+
+
+# Added 2015-06-02 16:49:51.507408
