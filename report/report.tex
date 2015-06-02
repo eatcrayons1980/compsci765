@@ -33,8 +33,10 @@
 %\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
 % \usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
 \usepackage{listings}
-%\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+% \usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
 % These packages are all incorporated in the memoir class to one degree or another...
+\usepackage{caption}
+\usepackage{subcaption}
 \usepackage{float}
 
 %%% HEADERS & FOOTERS
@@ -325,7 +327,21 @@ Generally the knowledge base is updated whenever the agent has an interpretation
 \section{Practical}
 
 \subsection{The Current System}
-Figure XXX shows an example of the running system after all forward chaining rules have been run. The system will first prompt for a user name and ask about any recent trips the user has been on. All information that is provided in this section will later be saved into longterm memory and will be available for future runs of the system. This means that every use of the system will extend the database of travelfacts.
+\begin{figure}[!htb]
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{system2.png}
+		\caption{ }
+	\end{subfigure}
+	\hfill	
+	\begin{subfigure}[b]{0.48\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{system1.png}
+		\caption{ }
+	\end{subfigure}
+	\caption{Screenshots of the running system.}\label{fig:system}
+\end{figure}
+Figure~\ref{fig:system} shows an example of the running system after all forward chaining rules have been run. The system will first prompt for a user name and ask about any recent trips the user has been on. All information that is provided in this section will later be saved into longterm memory and will be available for future runs of the system. This means that every use of the system will extend the database of travelfacts.
 After acquiring these initial facts about the user, the system will then proceed to recommend locations to the user with a reason why this location was selected, or ask about their opinion on certain randomly selected activities. If a recommendation was not accepted it will not recommend anything new before it has gathered more information about the user.
 
 \subsubsection{Strength and Weaknesses}
