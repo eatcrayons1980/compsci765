@@ -162,13 +162,15 @@ Although, initially, the designs suggested needing more process diagrams, the am
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{location_hierarchy.png}
-\caption{Automatic building of location hierarchy.\label{fig:hierarchy1}}
+\caption{Influence of location in the automatic building of a hierarchy.\label{fig:hierarchy1}}
 \end{figure}
-Influence diagrams will document information in the
-knowledge base that could potentially change beliefs
-in other areas. For instance, if the agent adds a belief
-that a user dislikes hot weather, this will influence
-beliefs about their enjoyment of locations with warm climates.
+Influence diagrams, such as Figure \ref{fig:hierarchy1}, document the various relationships between entities in the knowledge engine. In the figure, location information is influenced by the presence of related location facts. This separates new location information into three cases.
+
+In Case 1, the system recognizes a new travel location as a leaf node within the already existing location hierarchy. The system already knows of a larger location which encompasses the new location, and is unaware of a location specifying the location with higher granularity.
+
+Case 2 represents a scenario where the system is aware of the travel location, but is also aware of more specific locations within this location. For example, if the user states they traveled to South American, the system would recognize this a non-specific location due to knowledge already known of locations within South America. This would cause the system to inquire where in South America the user traveled.
+
+Case 3 represents the reverse situation from Case 2. The user has specified a location which is specific enough that the system is unaware of it. It is, essentially, a new entry. In this case, the agent prompts the user for the more general location which contains the original location, and continues prompting for more general locations until it is able to establish the location within the hierarchy. As an example, if the user specifies ``Boston'', and if the system has not recorded ``Boston'' previously, the system will ask for a more general location. The user may then specify either ``Massachusetts'', ``United States'' or some other location. ``United States'' is most likely in the knowledge engine, but ``Massachusetts'' may not be. In the later case, the system would patiently prompt for the more general location of ``Massachusetts'', at which point most users would type ``United States'', thus establishing the location of ``Boston'' in the location hierarchy. It is important to not that the system does not recognize items as specifically \emph{countries} or \emph{cities}, but rather, reasons about locations only by which locations are above or below it in the hierarchy. 
 
 \section{Design}
 \subsection{Overall Architecture}
